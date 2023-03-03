@@ -1,0 +1,109 @@
+﻿@model TicketingSystem.Models.BusTrip
+
+@{
+    ViewBag.Title = "The Easiest Way - EasyBus";
+}
+
+@section Scripts{
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.13.0/themes/smoothness/jquery-ui.css">
+    <script src="~/Scripts/jquery-3.3.1.min.js"></script>
+    <script src="~/Scripts/jquery-ui-1.13.2.min.js"></script>
+    <script src="~/Scripts/App/Custom.js"></script>
+
+}
+
+<!--The 1st layer-->
+<div class="flex-container">
+
+    <!--To display the welcome Image-->
+    <div class="flex-child welcomeImg" style="top:70px;">
+        <picture>
+            <img src="~/Content/Images/BusPoster.png" alt="WelcomeImg" style="width:auto;">
+        </picture>
+    </div>
+
+    <!--To display the search trip form-->
+    <div class="flex-child search-trip">
+        <div class="panel panel-default" style="width:400px;">
+            <div class="panel-heading" style="background-color:#8ebcf6; font-size:large; font-family:'Berlin Sans FB';display:flex;align-items:center; justify-content:center">Search Trip</div>
+                <div class="panel-body" style="background-color:#ffffff">
+                    @using (Html.BeginForm("SearchTrip", "Home", FormMethod.Get))
+                     {
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.OriginPlaceId)
+                            @Html.DropDownList("OriginPlaceId", null, htmlAttributes: new { @class = "form-control" })
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.DestinationPlaceId)
+                            @Html.DropDownList("DestinationPlaceId", null, htmlAttributes: new { @class = "form-control" })
+                        </div>
+
+                        <div class="form-group" style="padding-left:0px;">
+                            @Html.LabelFor(m => m.DepartureDate)
+                                <div class="has-feedback">
+                                    <input type="text" id="departureDate" name="departureDate" class="form-control">
+                                    <span class="form-control-feedback" style="padding-right:110px;"><i class="glyphicon glyphicon-calendar"></i></span>
+                                </div>
+                        </div>
+
+
+                        <div class="form-group" style="padding-left:0px;">
+                            @Html.LabelFor(m => m.ReturnDate)
+                                <div class="has-feedback">
+                                    <input type="text" id="returnDate" name="returnDate" class="form-control" placeholder="Optional">
+                                    <span class="form-control-feedback" style="padding-right:110px;"><i class="glyphicon glyphicon-calendar"></i></span>
+                                </div>
+                        </div>
+
+
+
+                        <div style="display:flex; justify-content:center; align-items:center;">
+                            <button type="submit" class="btn-default" style="width:140px; height:35px; color:white; background-color:#ffb349; border:thin; border-radius:10px; font-size:larger;">
+                            Search Bus<i class="glyphicon glyphicon-search" style="padding-left:10px; padding-top:5px;"></i>
+                            </button>
+                        </div>
+
+                     }
+                </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!--The second layer (Display advertisement)-->
+<div class="scd-layer">
+    <h2 style="font-family:Centaur; font-weight:bold; padding-top:10px; color:white; text-align:center;">Promotion</h2>
+    <div class="adv-container">
+
+        <div class="adv-box">
+            <img src="~/Content/Images/busAdv1.jpg" alt="busAdv1" class="adv-img">
+        </div>
+
+        <div class="adv-box">
+            <img src="~/Content/Images/busAdv2.png" alt="busAdv2" class="adv-img">
+        </div>
+
+        <div class="adv-box">
+            <img src="~/Content/Images/busAdv3.jpg" alt="busAdv3" class="adv-img">
+        </div>
+    </div>
+</div>
+
+<!--The Third layer (Display Popular route)-->
+<div class="thd-layer">
+    <h2><strong>Popular</strong> Bus Routes</h2>
+    <ul>
+        <li class="route-list">Bus from ? to ?</li>
+        <li class="route-list">Bus from ? to ?</li>
+        <li class="route-list">Bus from ? to ?</li>
+        <li class="route-list">Bus from ? to ?</li>
+        <li class="route-list">Bus from ? to ?</li>
+        <li class="route-list">Bus from ? to ?</li>
+    </ul>
+</div>
+
+
+

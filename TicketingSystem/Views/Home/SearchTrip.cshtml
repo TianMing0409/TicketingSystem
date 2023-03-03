@@ -1,0 +1,92 @@
+﻿@model IEnumerable<TicketingSystem.Models.BusTrip>
+
+@{
+    ViewBag.Title = "SearchTrip";
+}
+
+<h2>SearchTrip</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.OriginPlace.OriginPlaceName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DestinationPlace.DestinationPlaceName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DepartureDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ReturnDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DepartureTime)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SeatAvailable)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Price)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        @*<tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.OriginPlace.OriginPlaceName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DestinationPlace.DestinationPlaceName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DepartureDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ReturnDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DepartureTime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SeatAvailable)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Price)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.BusTripId }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.BusTripId }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.BusTripId })
+                </td>
+            </tr>*@
+
+    <div class="list-box">
+
+        @Html.DisplayFor(modelItem => item.OriginPlace.OriginPlaceName)
+        @Html.DisplayFor(modelItem => item.DestinationPlace.DestinationPlaceName)
+
+        @Html.DisplayFor(modelItem => item.DepartureDate)
+
+        @Html.DisplayFor(modelItem => item.ReturnDate)
+
+        @Html.DisplayFor(modelItem => item.DepartureTime)
+
+        @Html.DisplayFor(modelItem => item.SeatAvailable)
+
+        @Html.DisplayFor(modelItem => item.Price)
+
+        @Html.ActionLink("Edit", "Edit", new { id = item.BusTripId }) |
+        @Html.ActionLink("Details", "Details", new { id = item.BusTripId }) |
+        @Html.ActionLink("Delete", "Delete", new { id = item.BusTripId })
+    </div>
+
+
+    }
+
+</table>
