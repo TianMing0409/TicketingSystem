@@ -27,6 +27,8 @@ namespace TicketingSystem.Models
 
         public DbSet<DestinationPlace> DestinationPlaces { get; set; }
 
+        //public DbSet<BusInfo> BusInfo { get; set; }
+
         public ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)
         {

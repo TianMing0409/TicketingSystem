@@ -43,5 +43,7 @@ namespace TicketingSystem.Models
 
         public virtual DestinationPlace DestinationPlace { get; set; }
 
+        //public virtual BusInfo BusInfo { get; set; }
+
     }
 }

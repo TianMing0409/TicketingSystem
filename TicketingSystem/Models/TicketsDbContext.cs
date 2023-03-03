@@ -17,5 +17,7 @@ namespace TicketingSystem.Models
         public DbSet<OriginPlace> OriginPlaces { get; set; }
 
         public DbSet<DestinationPlace> DestinationPlaces { get; set; }
+
+        //public DbSet<BusInfo> BusInfo { get; set; }
     }
 }

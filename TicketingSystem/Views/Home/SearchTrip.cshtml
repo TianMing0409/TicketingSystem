@@ -1,10 +1,6 @@
 ﻿@model IEnumerable<TicketingSystem.Models.BusTrip>
 
-@{
-    ViewBag.Title = "SearchTrip";
-}
-
-<h2>SearchTrip</h2>
+<h2>Search Trip Result(s)</h2>
 
 <p>
     @Html.ActionLink("Create New", "Create")
@@ -67,6 +63,11 @@
             </tr>*@
 
     <div class="list-box">
+
+        <!--Reserve for bus ticket-->
+        <div style="border:1px solid black; width:150px; height:150px;position:relative ;left:20px; top:15px;">
+
+        </div>
 
         @Html.DisplayFor(modelItem => item.OriginPlace.OriginPlaceName)
         @Html.DisplayFor(modelItem => item.DestinationPlace.DestinationPlaceName)
