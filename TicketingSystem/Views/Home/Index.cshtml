@@ -12,6 +12,7 @@
 
 }
 
+
 <!--The 1st layer-->
 <div class="flex-container">
 
@@ -26,46 +27,46 @@
     <div class="flex-child search-trip">
         <div class="panel panel-default" style="width:400px;">
             <div class="panel-heading" style="background-color:#8ebcf6; font-size:large; font-family:'Berlin Sans FB';display:flex;align-items:center; justify-content:center">Search Trip</div>
-                <div class="panel-body" style="background-color:#ffffff">
-                    @using (Html.BeginForm("SearchTrip", "Home", FormMethod.Get))
-                     {
-                        <div class="form-group">
-                            @Html.LabelFor(m => m.OriginPlaceId)
-                            @Html.DropDownList("OriginPlaceId", null, htmlAttributes: new { @class = "form-control" })
+            <div class="panel-body" style="background-color:#ffffff">
+                @using (Html.BeginForm("SearchTrip", "Home", FormMethod.Get))
+                {
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.OriginPlaceId)
+                        @Html.DropDownList("OriginPlaceId", null, htmlAttributes: new { @class = "form-control", id = "OriginPlaceId" })
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.DestinationPlaceId)
+                        @Html.DropDownList("DestinationPlaceId", null, htmlAttributes: new { @class = "form-control", id = "DestinationPlaceId" })
+                    </div>
+
+                    <div class="form-group" style="padding-left:0px;">
+                        @Html.LabelFor(m => m.DepartureDate)
+                        <div class="has-feedback">
+                            <input type="text" id="departureDate" name="departureDate" class="form-control" value="@DateTime.Today.ToString("dd-MMMM-yyyy")">
+                            <span class="form-control-feedback" style="padding-right:110px;"><i class="glyphicon glyphicon-calendar"></i></span>
                         </div>
+                    </div>
 
-                        <div class="form-group">
-                            @Html.LabelFor(m => m.DestinationPlaceId)
-                            @Html.DropDownList("DestinationPlaceId", null, htmlAttributes: new { @class = "form-control" })
+
+                    <div class="form-group" style="padding-left:0px;">
+                        @Html.LabelFor(m => m.ReturnDate)
+                        <div class="has-feedback">
+                            <input type="text" id="returnDate" name="returnDate" class="form-control" placeholder="Optional">
+                            <span class="form-control-feedback" style="padding-right:110px;"><i class="glyphicon glyphicon-calendar"></i></span>
                         </div>
-
-                        <div class="form-group" style="padding-left:0px;">
-                            @Html.LabelFor(m => m.DepartureDate)
-                                <div class="has-feedback">
-                                    <input type="text" id="departureDate" name="departureDate" class="form-control">
-                                    <span class="form-control-feedback" style="padding-right:110px;"><i class="glyphicon glyphicon-calendar"></i></span>
-                                </div>
-                        </div>
-
-
-                        <div class="form-group" style="padding-left:0px;">
-                            @Html.LabelFor(m => m.ReturnDate)
-                                <div class="has-feedback">
-                                    <input type="text" id="returnDate" name="returnDate" class="form-control" placeholder="Optional">
-                                    <span class="form-control-feedback" style="padding-right:110px;"><i class="glyphicon glyphicon-calendar"></i></span>
-                                </div>
-                        </div>
+                    </div>
 
 
 
-                        <div style="display:flex; justify-content:center; align-items:center;">
-                            <button type="submit" class="btn-default" style="width:140px; height:35px; color:white; background-color:#ffb349; border:thin; border-radius:10px; font-size:larger;">
+                    <div style="display:flex; justify-content:center; align-items:center;">
+                        <button type="submit" class="btn-default" style="width:140px; height:35px; color:white; background-color:#ffb349; border:thin; border-radius:10px; font-size:larger;">
                             Search Bus<i class="glyphicon glyphicon-search" style="padding-left:10px; padding-top:5px;"></i>
-                            </button>
-                        </div>
-
-                     }
-                </div>
+                        </button>
+                    </div>
+                    @Html.ValidationSummary()
+                }
+            </div>
 
         </div>
 
@@ -93,16 +94,36 @@
 </div>
 
 <!--The Third layer (Display Popular route)-->
-<div class="thd-layer">
-    <h2><strong>Popular</strong> Bus Routes</h2>
-    <ul>
-        <li class="route-list">Bus from ? to ?</li>
-        <li class="route-list">Bus from ? to ?</li>
-        <li class="route-list">Bus from ? to ?</li>
-        <li class="route-list">Bus from ? to ?</li>
-        <li class="route-list">Bus from ? to ?</li>
-        <li class="route-list">Bus from ? to ?</li>
-    </ul>
+<!--Hardcoded-->
+<div class="thd-layer" style="margin-bottom:40px; margin-top:20px;">
+    <div style="display:flex; flex-direction:row; margin-left:160px;">
+        <!--First column-->
+        <div>
+            <h2><strong>Popular</strong> Bus Routes</h2>
+            <ul>
+                <li class="route-list">Bus from Johor Bahru to Kuala Lumpur</li>
+                <li class="route-list">Bus from Kuala Lumpur to Cameron Highlands</li>
+                <li class="route-list">Bus from Malacca to Kuala Lumpur</li>
+                <li class="route-list">Bus from Johor Bahru to Kuala Lumpur</li>
+                <li class="route-list">Bus from Kuala Lumpur to Penang</li>
+                <li class="route-list">Bus from Cameron Highlands to Kuala Lumpur</li>
+            </ul>
+        </div>
+
+        <!--Second column-->
+        <div style="margin-left:170px;">
+            <h2><strong>Popular</strong> Train Routes</h2>
+            <ul>
+                <li class="route-list">Train from Kuala Lumpur to Ipoh</li>
+                <li class="route-list">Train from Kuala Lumpur to Butterworth</li>
+                <li class="route-list">Train from Kuala Lumpur to Alor Setar</li>
+                <li class="route-list">Train from Kuala Lumpur to Sungai Petani</li>
+                <li class="route-list">Train from Kuala Lumpur to Batu Gajah</li>
+                <li class="route-list">Train from Kuala Lumpur to Gemas</li>
+            </ul>
+        </div>
+    </div>
+
 </div>
 
 

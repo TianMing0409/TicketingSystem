@@ -1,0 +1,82 @@
+﻿@model TicketingSystem.Models.BusTrip
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>BusTrip</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.BusInfos.BusCompanyName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.BusInfos.BusCompanyName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DestinationPlace.DestinationPlaceName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DestinationPlace.DestinationPlaceName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.OriginPlace.OriginPlaceName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.OriginPlace.OriginPlaceName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DepartureDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DepartureDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ReturnDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ReturnDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DepartureTime)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DepartureTime)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SeatAvailable)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SeatAvailable)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Price)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Price)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.BusTripId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

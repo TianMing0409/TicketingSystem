@@ -18,6 +18,13 @@ namespace TicketingSystem.Models
 
         public DbSet<DestinationPlace> DestinationPlaces { get; set; }
 
-        //public DbSet<BusInfo> BusInfo { get; set; }
+        public DbSet<BusInfo> BusInfos { get; set; }
+
+
+        public System.Data.Entity.DbSet<TicketingSystem.Models.Booking> Bookings { get; set; }
+
+        public System.Data.Entity.DbSet<TicketingSystem.Models.Payment> Payments { get; set; }
+
+        //public System.Data.Entity.DbSet<TicketingSystem.ViewModels.BusTripViewModel> BusTripViewModels { get; set; }
     }
 }

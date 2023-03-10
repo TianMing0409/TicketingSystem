@@ -1,0 +1,66 @@
+﻿@model TicketingSystem.Models.Booking
+
+@{
+    ViewBag.Title = "Booking";
+}
+
+<h2>Passenger details</h2>
+<div style="display:flex; flex-direction:row;">
+    <div class="panel panel-default" style="width: 1000px; height: 400px;">
+        <div class="panel-heading" style="font-weight: bold;">Main passenger</div>
+        <p style="margin-top:10px;margin-left:5px;">Please fill up one (1) passenger details below.</p>
+
+        <div class="panel-body" style="padding-left:30px;">
+            @using (Html.BeginForm("Index", "Booking", FormMethod.Post))
+            {
+                <div class="form-group">
+                    @Html.LabelFor(m => m.PassengerName)
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                        @Html.EditorFor(m => m.PassengerName, new { htmlAttributes = new { @class = "form-control", style="width:580px; max-width:580px;", placeholder = "Full Name" } })
+                    </div>
+                    @Html.ValidationMessageFor(m => m.PassengerName, "", new { @class = "text-danger" })
+                </div>
+
+                <div style="display:flex; flex-direction:row;">
+                    <div>
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Email)
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
+                                @Html.EditorFor(m => m.Email, new { htmlAttributes = new { @class = "form-control", style = "width:250px;" } })
+                            </div>
+                            @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div style="margin-left:40px;">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.PhoneNo)
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span>
+                                @Html.EditorFor(m => m.PhoneNo, new { htmlAttributes = new { @class = "form-control", style = "width:250px;" } })
+                            </div>
+                            @Html.ValidationMessageFor(m => m.PhoneNo, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+
+
+                <div style="display: flex; justify-content: center; align-items: center;">
+                    <button type="submit" class="btn-default" style="width: 140px; height: 35px; color: white; background-color: #ff7c1f; border: thin; border-radius: 10px; font-size: larger; margin-top:20px;">
+                        Next
+                    </button>
+                </div>
+            }
+        </div>
+    </div>
+
+
+    <!--Bus Trip Info -->
+    <div style="width:400px; height:250px; margin-left:100px; ">
+        @{Html.RenderAction("BusTripInfo", "Booking");}
+
+    </div>
+
+</div>

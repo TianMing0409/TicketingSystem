@@ -168,32 +168,60 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\BookingController.cs" />
+    <Compile Include="Controllers\BusTripsManagerController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202303080751206_newBooking.cs" />
+    <Compile Include="Migrations\202303080751206_newBooking.Designer.cs">
+      <DependentUpon>202303080751206_newBooking.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202303090038081_NewMigration.cs" />
+    <Compile Include="Migrations\202303090038081_NewMigration.Designer.cs">
+      <DependentUpon>202303090038081_NewMigration.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\Booking.cs" />
+    <Compile Include="Models\BusInfo.cs" />
     <Compile Include="Models\BusTrip.cs" />
     <Compile Include="Models\DestinationPlace.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\OriginPlace.cs" />
+    <Compile Include="Models\Payment.cs" />
     <Compile Include="Models\TicketsDbContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="ViewModels\PaymentViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\font-awesome.css" />
+    <Content Include="Content\font-awesome.min.css" />
     <Content Include="Content\Images\busAdv1.jpg" />
     <Content Include="Content\Images\busAdv2.png" />
     <Content Include="Content\Images\busAdv3.jpg" />
     <Content Include="Content\Images\BusPoster.png" />
+    <Content Include="Content\Images\calendarIcon.png" />
+    <Content Include="Content\Images\cvvIcon.jpg" />
     <Content Include="Content\Images\EasyBusLogo.png" />
+    <Content Include="Content\Images\endPointIcon.png" />
+    <Content Include="Content\Images\loginBackground.jpg" />
+    <Content Include="Content\Images\mapLocationIcon.png" />
+    <Content Include="Content\Images\noResultsFound.png" />
+    <Content Include="Content\Images\paymentSuccessLogo.png" />
+    <Content Include="Content\Images\previewImageIcon.png" />
+    <Content Include="Content\Images\seatIcon.png" />
+    <Content Include="Content\Images\signUpImage.jpg" />
+    <Content Include="Content\Images\startPointIcon.png" />
+    <Content Include="Content\Images\timeIcon.png" />
     <Content Include="Content\themes\base\accordion.css" />
     <Content Include="Content\themes\base\all.css" />
     <Content Include="Content\themes\base\autocomplete.css" />
@@ -236,12 +264,18 @@
     <Content Include="Content\themes\base\theme.css" />
     <Content Include="Content\themes\base\tooltip.css" />
     <Content Include="favicon.ico" />
+    <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="Scripts\App\Custom.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="fonts\FontAwesome.otf" />
+    <Content Include="fonts\fontawesome-webfont.woff2" />
+    <Content Include="fonts\fontawesome-webfont.woff" />
+    <Content Include="fonts\fontawesome-webfont.ttf" />
+    <Content Include="fonts\fontawesome-webfont.eot" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
@@ -294,11 +328,22 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Home\Details.cshtml" />
     <Content Include="Views\Home\Delete.cshtml" />
-    <Content Include="Views\Home\Create.cshtml" />
     <Content Include="Scripts\moment.min.js.map" />
     <Content Include="Scripts\moment-with-locales.min.js.map" />
     <Content Include="Views\Home\SearchTrip.cshtml" />
     <Content Include="Views\Home\Edit.cshtml" />
+    <Content Include="Views\Home\Create.cshtml" />
+    <Content Include="Views\Booking\Index.cshtml" />
+    <Content Include="Views\BusTripsManager\Create.cshtml" />
+    <Content Include="Views\BusTripsManager\Delete.cshtml" />
+    <Content Include="Views\BusTripsManager\Details.cshtml" />
+    <Content Include="Views\BusTripsManager\Edit.cshtml" />
+    <Content Include="Views\BusTripsManager\Index.cshtml" />
+    <Content Include="Views\Booking\BusTripInfo.cshtml" />
+    <Content Include="Views\Booking\Payment.cshtml" />
+    <Content Include="Views\Booking\Complete.cshtml" />
+    <Content Include="Views\Home\NoResultsFound.cshtml" />
+    <Content Include="Views\Home\ShowAllBusTrip.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -315,6 +360,14 @@
     <None Include="packages.config" />
     <Content Include="Scripts\jquery-3.3.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.3.1.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\202303080751206_newBooking.resx">
+      <DependentUpon>202303080751206_newBooking.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202303090038081_NewMigration.resx">
+      <DependentUpon>202303090038081_NewMigration.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -11,6 +11,8 @@ namespace TicketingSystem.Models
     {
         public int BusTripId { get; set; }
 
+        public int BusId { get; set; }
+
         [Required]
         [DisplayName("Origin")]
         public int OriginPlaceId { get; set; }
@@ -34,16 +36,18 @@ namespace TicketingSystem.Models
         public string DepartureTime { get; set; }
 
         [Required]
+        [DisplayName("Seat Available(s)")]
         public int SeatAvailable { get; set; }
 
         [Required]
+        [DisplayName("Price (RM)")]
         public decimal Price { get; set; }
 
         public virtual OriginPlace OriginPlace { get; set; }
 
         public virtual DestinationPlace DestinationPlace { get; set; }
 
-        //public virtual BusInfo BusInfo { get; set; }
+        public virtual BusInfo BusInfos { get; set; }
 
     }
 }

@@ -1,0 +1,26 @@
+﻿
+@{
+    ViewBag.Title = "Payment Complete";
+}
+<div style="margin-bottom:55px; width:500px; margin-left:350px; margin-top:40px; border-radius:10px; padding-bottom:40px;  box-shadow: 0 0 10px rgb(128, 128, 128);">
+
+        <img src="~/Content/Images/paymentSuccessLogo.png" style="max-height:150px; max-width:150px; margin-left:175px; margin-top:40px;" />
+        <h2 style="text-align:center;">Your payment was successful</h2>
+
+
+        <div style="margin-left:35px; margin-top:40px;">
+            <p>Thanks for your booking! Please check your email for the details of your booking.</p>
+            <p>
+                How about other trips in our website
+                @Html.ActionLink("EasyBus.", "Index", "Home")
+            </p>
+
+        </div>
+
+
+    <div style="margin-left:160px; margin-top:40px;" >
+        @Html.ActionLink("Back to Homepage", "Index", "Home",null, new { style="font-size:20px;"})
+    </div>
+
+
+</div>

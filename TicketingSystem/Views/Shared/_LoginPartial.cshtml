@@ -1,22 +1,64 @@
-﻿@using Microsoft.AspNet.Identity
+﻿@helper Truncate(string input, int length)
+{
+    if (input.Length <= length)
+    {
+        @input
+    }
+    else
+    {
+        @input.Substring(0, length)<text>...</text>
+    }
+}
+
+@using Microsoft.AspNet.Identity
 @if (Request.IsAuthenticated)
 {
     using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
     {
-    @Html.AntiForgeryToken()
+        @Html.AntiForgeryToken()
 
-    <ul class="nav navbar-nav navbar-right">
-        <li>
-            @Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
-        </li>
-        <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
-    </ul>
+        <ul class="nav navbar-nav navbar-right" style="margin-top:-10px; margin-right:40px; ">
+            <li class="dropdown dark-mode">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="color:white; display:flex; align-items:center;">
+                    <i class="fa fa-user-circle" style="font-size:30px; color:white; margin-top:5px; margin-right:5px;"></i>
+                    @*<span style="margin-left:5px;">@Truncate(@User.Identity.GetUserName().Split('@')[0], 15)</span>*@
+                    <i class="fa fa-angle-down" style="font-size:32px; margin-left:10px; color:white;"></i>
+                </a>
+                <ul class="dropdown-menu">
+                    <li>
+                        @*<a href="@Url.Action("Index", "Manage")" title="Manage">Personal Profile</a>*@
+                        <a href="@Url.Action("Index", "Manage")" title="Manage">@Truncate(@User.Identity.GetUserName().Split('@')[0], 15)</a>
+                    </li>
+                    <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
+                </ul>
+            </li>
+        </ul>
     }
 }
 else
 {
-    <ul class="nav navbar-nav navbar-right">
-        <li>@Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink",style= "color:white;" })</li>
-        <li>@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink", style = "color:white;" })</li>
+    <ul class="nav navbar-nav navbar-right" style="margin-right:15px; margin-top:-5px; ">
+        <li class="dropdown dark-mode">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                <i class="	fa fa-user-circle-o" style="font-size:32px; color:white;"></i>
+                <i class="fa fa-angle-down" style="font-size:32px; margin-left:10px; color:white;"></i>
+            </a>
+            <ul class="dropdown-menu">
+                <li>
+                    <a href="@Url.Action("Login","Account")">
+                        <span class="glyphicon glyphicon-log-in" style="margin-right:10px;"></span>Log in
+                        @*@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })*@
+                    </a>
+                </li>
+                
+
+                <li>
+                    <a href="@Url.Action("Register","Account")">
+                        <span class="glyphicon glyphicon-pencil" style="margin-right:10px;"></span>Sign up
+                        @*@Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })*@
+                    </a>
+                </li>
+            </ul>
+        </li>
     </ul>
 }

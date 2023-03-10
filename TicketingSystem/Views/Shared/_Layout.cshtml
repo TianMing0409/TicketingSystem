@@ -6,10 +6,10 @@
     <title>@ViewBag.Title - My ASP.NET Application</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top" style="height:60px; background-color:#1a5fbf;">
+    <div class="navbar navbar-inverse navbar-fixed-top" style="height:70px; background-color:#008aff;">
         <div class="container">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -19,14 +19,15 @@
                 </button>
                 <!--Logo-->
                 <a href="@Url.Action("Index","Home")">
-                    <img src="~/Content/Images/EasyBusLogo.png" alt="Logo" class="navbar-brand" style="width:170px; height:75px; padding-top:0px;">
+                    <img src="~/Content/Images/EasyBusLogo.png" alt="Logo" class="navbar-brand" style="width:170px; height:80px; padding-top:5px; margin-left:20px;">
                 </a>
             </div>
-            <div class="navbar-collapse collapse" style="padding-top:5px; font-size:20px;">
+
+            <div class="nav navbar-nav navbar-right" style="padding-top:10px; font-size:20px;">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home",null,new { style="color:white;"})</li>
-                    <li>@Html.ActionLink("Bus Ticket","","", null, new { style = "color:white;" })</li>
-                    <li>@Html.ActionLink("About", "About", "Home", null, new { style = "color:white;" })</li>
+                    <li>@Html.ActionLink("Home", "Index", "Home", null, new { style = "color:white; margin-right:20px;" })</li>
+                    <li>@Html.ActionLink("Bus Ticket", "ShowAllBusTrip", "Home", null, new { style = "color:white; margin-right:20px;" })</li>
+                    <li>@Html.ActionLink("About", "About", "Home", null, new { style = "color:white; margin-right:20px;" })</li>
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>
@@ -36,7 +37,7 @@
         @RenderBody()
     </div>
 
-    <footer style="background-color:#0094ff; height:30px;"  >
+    <footer style="background-color:#0094ff; height:30px;">
         <p style="font-size:15px; color:black; text-align:center; padding-bottom:5px;">&copy; @DateTime.Now.Year - EasyBus</p>
     </footer>
 

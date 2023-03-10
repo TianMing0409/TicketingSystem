@@ -18,6 +18,16 @@ $(function () {
     });
 });
 
+$(document).ready(function () {
+    $('#busCompanyLogo').change(function (event) {
+        var reader = new FileReader();
+        reader.onload = function () {
+            $('#imagePreview').attr('src', reader.result);
+        }
+        reader.readAsDataURL(event.target.files[0]);
+    });
+});
+
 
 ////Zooming in and out images
 //$(document).ready(function () {

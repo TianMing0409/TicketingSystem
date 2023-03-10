@@ -13,7 +13,7 @@ namespace TicketingSystem
     {
         protected void Application_Start()
         {
-            Database.SetInitializer<TicketingSystem.Models.ApplicationDbContext>(new DropCreateDatabaseIfModelChanges<Models.ApplicationDbContext>());
+            //Database.SetInitializer<TicketingSystem.Models.ApplicationDbContext>(new DropCreateDatabaseIfModelChanges<Models.ApplicationDbContext>());
             AreaRegistration.RegisterAllAreas();
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);

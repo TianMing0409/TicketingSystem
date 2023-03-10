@@ -3,6 +3,45 @@
     /*padding-bottom: 20px;*/
 }
 
+.dark-mode .dropdown-menu {
+    background-color: white;
+}
+
+    .dark-mode .dropdown-menu li a {
+        color: #000000;
+        font-size:16px;
+        margin:5px;
+    }
+
+        .dark-mode .dropdown-menu li a:hover {
+            background-color: #88d6f3;
+        }
+
+
+.button-link {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: white;
+    color: #000000;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 19px;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+    width: 210px;
+    height:47px;
+}
+
+    .button-link:hover {
+        background-color: #1c5fff;
+        color: #fff;
+        text-decoration: none;
+    }
+
+
 .flex-container {
     display: flex;
     /*padding-left:70px;*/
@@ -84,11 +123,20 @@
 
 .list-box {
     border: 1px solid #ccc;
-    border-radius:10px;
+    border-radius: 10px;
     padding: 10px;
     margin: 30px;
-    height:200px;
+    height: 120px;
+    display: flex;
+    flex-direction: row;
+    /*justify-content: space-between;*/
+    align-items: center;
 }
+
+    /*.list-box > div {
+        margin-left:50px;
+        padding-right:150px;
+    }*/
 
 
 /* Set padding to keep content from hitting the edges */
