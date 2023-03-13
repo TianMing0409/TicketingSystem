@@ -172,16 +172,17 @@
     <Compile Include="Controllers\BusTripsManagerController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\PromotionsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202303080751206_newBooking.cs" />
-    <Compile Include="Migrations\202303080751206_newBooking.Designer.cs">
-      <DependentUpon>202303080751206_newBooking.cs</DependentUpon>
+    <Compile Include="Migrations\202303120743345_addPromotion.cs" />
+    <Compile Include="Migrations\202303120743345_addPromotion.Designer.cs">
+      <DependentUpon>202303120743345_addPromotion.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202303090038081_NewMigration.cs" />
-    <Compile Include="Migrations\202303090038081_NewMigration.Designer.cs">
-      <DependentUpon>202303090038081_NewMigration.cs</DependentUpon>
+    <Compile Include="Migrations\202303130805237_newPayment.cs" />
+    <Compile Include="Migrations\202303130805237_newPayment.Designer.cs">
+      <DependentUpon>202303130805237_newPayment.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -193,9 +194,11 @@
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\OriginPlace.cs" />
     <Compile Include="Models\Payment.cs" />
+    <Compile Include="Models\Promotion.cs" />
     <Compile Include="Models\TicketsDbContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="ViewModels\BookingHistoryViewModel.cs" />
     <Compile Include="ViewModels\PaymentViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -205,23 +208,31 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\font-awesome.css" />
     <Content Include="Content\font-awesome.min.css" />
+    <Content Include="Content\Images\aboutUsBg.jpg" />
     <Content Include="Content\Images\busAdv1.jpg" />
     <Content Include="Content\Images\busAdv2.png" />
     <Content Include="Content\Images\busAdv3.jpg" />
     <Content Include="Content\Images\BusPoster.png" />
     <Content Include="Content\Images\calendarIcon.png" />
+    <Content Include="Content\Images\customerServiceIcon.png" />
     <Content Include="Content\Images\cvvIcon.jpg" />
     <Content Include="Content\Images\EasyBusLogo.png" />
     <Content Include="Content\Images\endPointIcon.png" />
+    <Content Include="Content\Images\fasterBookingIcon.png" />
+    <Content Include="Content\Images\greatSavingIcon.png" />
+    <Content Include="Content\Images\Loading.gif" />
     <Content Include="Content\Images\loginBackground.jpg" />
     <Content Include="Content\Images\mapLocationIcon.png" />
     <Content Include="Content\Images\noResultsFound.png" />
     <Content Include="Content\Images\paymentSuccessLogo.png" />
     <Content Include="Content\Images\previewImageIcon.png" />
     <Content Include="Content\Images\seatIcon.png" />
+    <Content Include="Content\Images\secureWebsiteIcon.png" />
     <Content Include="Content\Images\signUpImage.jpg" />
     <Content Include="Content\Images\startPointIcon.png" />
     <Content Include="Content\Images\timeIcon.png" />
+    <Content Include="Content\Images\whiteStar.png" />
+    <Content Include="Content\Images\yellowStar.png" />
     <Content Include="Content\themes\base\accordion.css" />
     <Content Include="Content\themes\base\all.css" />
     <Content Include="Content\themes\base\autocomplete.css" />
@@ -344,6 +355,12 @@
     <Content Include="Views\Booking\Complete.cshtml" />
     <Content Include="Views\Home\NoResultsFound.cshtml" />
     <Content Include="Views\Home\ShowAllBusTrip.cshtml" />
+    <Content Include="Views\Promotions\Create.cshtml" />
+    <Content Include="Views\Promotions\Delete.cshtml" />
+    <Content Include="Views\Promotions\Details.cshtml" />
+    <Content Include="Views\Promotions\Edit.cshtml" />
+    <Content Include="Views\Promotions\Index.cshtml" />
+    <Content Include="Views\Booking\BookingHistory.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -362,11 +379,11 @@
     <Content Include="Scripts\jquery-3.3.1.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202303080751206_newBooking.resx">
-      <DependentUpon>202303080751206_newBooking.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202303120743345_addPromotion.resx">
+      <DependentUpon>202303120743345_addPromotion.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202303090038081_NewMigration.resx">
-      <DependentUpon>202303090038081_NewMigration.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202303130805237_newPayment.resx">
+      <DependentUpon>202303130805237_newPayment.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

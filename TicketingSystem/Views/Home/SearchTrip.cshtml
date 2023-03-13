@@ -11,20 +11,20 @@
         <th style="position:relative; left:155px; ">
             @Html.DisplayNameFor(model => model.DepartureTime)
         </th>
-        <th  style=" position:relative; left:110px;">
-        @Html.Raw("Location")
+        <th style=" position:relative; left:80px;">
+            @Html.Raw("Location")
         </th>
-        <th  style="position:relative; left:115px;">
+        <th style="position:relative; left:105px;">
             @Html.DisplayNameFor(model => model.DepartureDate)
         </th>
-        <th  style="position:relative; left:27px;">
-            @Html.DisplayNameFor(model => model.ReturnDate)
+        <th style="position:relative; left:40px;">
+            @Html.DisplayNameFor(model => model.Rating)
         </th>
 
-        <th  style="position:relative; left:-25px;">
+        <th style="position:relative; left:10px;">
             @Html.DisplayNameFor(model => model.SeatAvailable)
         </th>
-        <th  style="position:relative; left:-105px;">
+        <th style="position:relative; left:-90px;">
             @Html.DisplayNameFor(model => model.Price)
         </th>
     </tr>
@@ -69,20 +69,45 @@
         @Html.DisplayFor(modelItem => item.DepartureDate)
     </div>
 
-    <div style=" margin-left:20px; font-size:15px; width:100px; text-align:center;">
-        @if (item.ReturnDate != null)
-        {
-            @Html.DisplayFor(modelItem => item.ReturnDate)
-        }
-        else
-        {
-            <text>-</text>
-        }
-    </div>
+    @*<div style=" margin-left:20px; font-size:15px; width:100px; text-align:center;">
+            @if (item.ReturnDate != null)
+            {
+                @Html.DisplayFor(modelItem => item.ReturnDate)
+            }
+            else
+            {
+                <text>-</text>
+            }
+        </div>*@
+    @if (item.Rating >= (decimal)4.0)
+    {
+        <div style=" margin-left:60px; font-size:15px; width:60px; text-align:center; background-color:#00c854; border-radius:4px; padding-bottom:3px; padding-top:3px; color:white; font-family:Bahnschrift;">
+            @Html.DisplayFor(modelItem => item.Rating)
+            <img src="~/Content/Images/whiteStar.png" style="max-height:23px; max-width:23px; margin-top:-2px;" />
+
+        </div>
+    }
+    else if (item.Rating < (decimal)4.0 && item.Rating >= (decimal)3.0)
+    {
+        <div style=" margin-left:60px; font-size:15px; width:60px; text-align:center; background-color:#f8be1a; border-radius:4px; padding-bottom:3px; padding-top:3px; color:white; font-family:Bahnschrift;">
+            @Html.DisplayFor(modelItem => item.Rating)
+            <img src="~/Content/Images/whiteStar.png" style="max-height:23px; max-width:23px; margin-top:-2px;" />
+
+        </div>
+    }
+    else
+    {
+        <div style=" margin-left:60px; font-size:15px; width:60px; text-align:center; background-color:#ff56b3; border-radius:4px; padding-bottom:3px; padding-top:3px; color:white; font-family:Bahnschrift;">
+            @Html.DisplayFor(modelItem => item.Rating)
+            <img src="~/Content/Images/whiteStar.png" style="max-height:23px; max-width:23px; margin-top:-2px;" />
+
+        </div>
+    }
+
 
     <div style=" font-size:15px; width:80px; text-align:center; margin-left:50px;">
         @Html.DisplayFor(modelItem => item.SeatAvailable)
-        <img src="~/Content/Images/seatIcon.png" style="height: 20px;  max-height:30px; max-width:30px;margin-left:6px;"/>
+        <img src="~/Content/Images/seatIcon.png" style="height: 20px;  max-height:30px; max-width:30px;margin-left:6px;" />
     </div>
 
     <div style=" width:100px; font-weight:bold; font-weight:bold;margin-left:30px ; font-size:18px; color:black; position:relative;left:20px;">
@@ -96,9 +121,9 @@
         </div>*@
     <div>
         @*<button type="submit" class="btn-default" style="width:130px; height:40px; color:white; background-color:#ffbb00; border:thin; border-radius:10px; font-size:15px; margin-left:25px;">
-            Book Tickets
-        </button>*@
-        @Html.ActionLink("Book Tickets","Index","Booking",new { id = item.BusTripId }, new { @class = "btn btn-warning",style= "margin-left:25px; background-color:#fc6203;" })
+                Book Tickets
+            </button>*@
+        @Html.ActionLink("Book Tickets", "Index", "Booking", new { id = item.BusTripId }, new { @class = "btn btn-warning", style = "margin-left:25px; background-color:#fc6203;" })
     </div>
 
 

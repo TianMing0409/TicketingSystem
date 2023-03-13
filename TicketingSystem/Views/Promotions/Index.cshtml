@@ -1,0 +1,51 @@
+﻿@model IEnumerable<TicketingSystem.Models.Promotion>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.PromotionTitle)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PromotionDuration)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PromotionDescription)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PromotionPic)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.PromotionTitle)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PromotionDuration)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PromotionDescription)
+        </td>
+        <td>
+            <img src="data:image;base64,@Convert.ToBase64String(item.PromotionPic)" alt="@item.PromotionTitle" style="max-width:70px; max-height:70px;" />
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.PromotionId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.PromotionId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.PromotionId })
+        </td>
+    </tr>
+}
+
+</table>

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNet.Identity;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
@@ -50,6 +51,7 @@ namespace TicketingSystem.Controllers
         //GET: Payment
         public ActionResult Payment(int? bookingId, int? busTripId, Payment payment)
         {
+
 
             var busTrip = tripDB.BusTrips.Find(busTripId);
             var booking = tripDB.Bookings.Find(bookingId);
@@ -108,34 +110,40 @@ namespace TicketingSystem.Controllers
         [HttpPost]
         public ActionResult Payment(int bookingId, int busTripId, PaymentViewModel viewModel,Payment payment)
         {
+            var userId = Session["UserId"] as string;
+
             DateTime currentDate = DateTime.Now;
             BusTrip busTrip = tripDB.BusTrips.Find(busTripId);
 
-            if (ModelState.IsValid)
-            {
-                var paymentInfo = new Payment
+            if (userId != null){
+                if (ModelState.IsValid)
                 {
-                    BookingId = bookingId,
-                    PaymentAmount = busTrip.Price,
-                    PaymentDate = currentDate,
-                    CardHolderName = viewModel.Payment.CardHolderName,
-                    CardNo = viewModel.Payment.CardNo,
-                    ExpirationDate = viewModel.Payment.ExpirationDate,
-                    Cvc = viewModel.Payment.Cvc
-                };
+                    var paymentInfo = new Payment
+                    {
+                        Id = userId,
+                        BookingId = bookingId,
+                        PaymentAmount = busTrip.Price,
+                        PaymentDate = currentDate,
+                        CardHolderName = viewModel.Payment.CardHolderName,
+                        CardNo = viewModel.Payment.CardNo,
+                        ExpirationDate = viewModel.Payment.ExpirationDate,
+                        Cvc = viewModel.Payment.Cvc
+                    };
 
-                tripDB.Payments.Add(paymentInfo);
+                    tripDB.Payments.Add(paymentInfo);
 
-                tripDB.SaveChanges();
+                    tripDB.SaveChanges();
 
-                busTrip.SeatAvailable -= 1;
-                tripDB.Entry(busTrip).State = EntityState.Modified;
-                tripDB.SaveChanges();
+                    busTrip.SeatAvailable -= 1;
+                    tripDB.Entry(busTrip).State = EntityState.Modified;
+                    tripDB.SaveChanges();
 
 
 
                 return RedirectToAction("Complete", "Booking", new { id = paymentInfo.PaymentId });
             }
+            }
+
 
             return View();
         }
@@ -152,5 +160,36 @@ namespace TicketingSystem.Controllers
             var busTrip = tripDB.BusTrips.Find(id);
             return PartialView(busTrip);
         }
+
+        public ActionResult BookingHistory()
+        {
+            var userId = Session["UserId"] as string;
+            if (userId != null)
+            {
+                var payments = tripDB.Payments.Where(p => p.Id == userId).ToList();
+
+                var bookings = new List<Booking>();
+
+                foreach (var payment in payments)
+                {
+                    var booking = tripDB.Bookings.FirstOrDefault(b => b.BookingId == payment.BookingId);
+                    if (booking != null)
+                    {
+                        bookings.Add(booking);
+                    }
+                }
+
+                //Return the bookings to the view
+                var viewModel = new BookingHistoryViewModel
+                {
+                    Bookings = bookings
+                };
+                return View(viewModel);
+            }
+
+            return RedirectToAction("Login", "Account");
+        }
+
+
     }
 }

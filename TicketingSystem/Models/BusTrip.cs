@@ -43,6 +43,11 @@ namespace TicketingSystem.Models
         [DisplayName("Price (RM)")]
         public decimal Price { get; set; }
 
+        [Required]
+        [DisplayFormat(DataFormatString = "{0:N1}", ApplyFormatInEditMode = true)]
+        [DisplayName("Rating")]
+        public decimal Rating { get; set; }
+
         public virtual OriginPlace OriginPlace { get; set; }
 
         public virtual DestinationPlace DestinationPlace { get; set; }

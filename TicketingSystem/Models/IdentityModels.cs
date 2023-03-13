@@ -33,6 +33,8 @@ namespace TicketingSystem.Models
 
         public DbSet<Payment> Payments { get; set; }
 
+        public DbSet<Promotion> Promotions { get; set; }
+
         public ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)
         {

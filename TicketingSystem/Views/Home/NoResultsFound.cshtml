@@ -1,16 +1,148 @@
-﻿
+﻿@model IEnumerable<TicketingSystem.Models.BusTrip>
+
 @{
     ViewBag.Title = "NotResultsFound";
 }
+<div style="margin-bottom:30px;">
+    <div style="display:flex; justify-content:center; align-items:center; margin-top:20px;">
+        <img src="~/Content/Images/noResultsFound.png" style="max-height:200px; max-width:200px;" />
+    </div>
 
-<div style="display:flex; justify-content:center; align-items:center;">
-    <img src="~/Content/Images/noResultsFound.png" style="max-height:200px; max-width:200px;" />
-</div>
+    <div style="text-align:center; margin-top:40px;">
+        <h2>Sorry,</h2>
+        <p style="font-size:18px;">
+            there is no trip available for your selection. @Html.ActionLink("Please try another route/date", "Index", "Home")
+        </p>
 
-<div>
-    <h3>
-        Sry, there is no trip available for your selection. @Html.ActionLink("Please try another route/date", "Index", "Home")
-    </h3>
+    </div>
+
+    <div style="margin-top:40px;">
+        <h2 style="margin-bottom:20px;">Other Bus Routes</h2>
+        <table class="table">
+            <tr>
+                <th style="position:relative; left:155px; ">
+                    @Html.DisplayNameFor(model => model.DepartureTime)
+                </th>
+                <th style=" position:relative; left:80px;">
+                    @Html.Raw("Location")
+                </th>
+                <th style="position:relative; left:105px;">
+                    @Html.DisplayNameFor(model => model.DepartureDate)
+                </th>
+                <th style="position:relative; left:40px;">
+                    @Html.DisplayNameFor(model => model.Rating)
+                </th>
+
+                <th style="position:relative; left:10px;">
+                    @Html.DisplayNameFor(model => model.SeatAvailable)
+                </th>
+                <th style="position:relative; left:-90px;">
+                    @Html.DisplayNameFor(model => model.Price)
+                </th>
+            </tr>
+        </table>
+
+
+        @foreach (var item in Model)
+        {
+        <div class="list-box">
+
+            <div style="display:flex; flex-direction:column">
+                <div style=" max-width:70px; max-height: 70px; position:relative ;left:25px; width:70px; height:70px;">
+                    <img src="data:image;base64,@Convert.ToBase64String(item.BusInfos.BusCompanyLogo)" alt="@item.BusInfos.BusCompanyName Logo" style="max-width:70px; max-height:70px;" />
+                </div>
+
+                <div style="width:120px; margin-top:10px; text-align:center; font-size:12px;">
+                    @Html.DisplayFor(modelItem => item.BusInfos.BusCompanyName)
+                </div>
+            </div>
+
+
+            <div style="font-size:18px; margin-left:10px; color:black; font-weight:bold; width:90px;">
+                @Html.DisplayFor(modelItem => item.DepartureTime)
+            </div>
+
+
+            <div style="display:flex; flex-direction:column; padding-right:2px; font-family:'Times New Roman', Times, serif;">
+                <img src="~/Content/Images/startPointIcon.png" style="height: 20px; max-height:30px; max-width:30px;margin-left:4px;padding-bottom:5px;" />
+                <div style="border-left: 2px dotted black; height: 30px; margin-left:11px"></div>
+                <img src="~/Content/Images/endPointIcon.png" style="height: 20px;  max-height:30px; max-width:30px;margin-left:4px;padding-top:5px;" />
+            </div>
+
+            <div style="display: flex; flex-direction: column; align-items: center;">
+                <div style="font-size:15px; width:200px; height:30px;  display: flex; align-items: center; margin-top:0px; margin-bottom:22px; word-break: break-all;">
+                    @Html.DisplayFor(modelItem => item.OriginPlace.OriginPlaceName)
+                </div>
+                <div style="font-size:15px; width:200px; height:30px; display: flex; align-items: center; word-break: break-all;">
+                    @Html.DisplayFor(modelItem => item.DestinationPlace.DestinationPlaceName)
+                </div>
+            </div>
+
+            <div style=" font-size:15px; width:100px; text-align:center; margin-left:5px;">
+                @Html.DisplayFor(modelItem => item.DepartureDate)
+            </div>
+
+            @*<div style=" margin-left:20px; font-size:15px; width:100px; text-align:center;">
+            @if (item.ReturnDate != null)
+            {
+                @Html.DisplayFor(modelItem => item.ReturnDate)
+            }
+            else
+            {
+                <text>-</text>
+            }
+        </div>*@
+            @if (item.Rating >= (decimal)4.0)
+            {
+                <div style=" margin-left:60px; font-size:15px; width:60px; text-align:center; background-color:#00c854; border-radius:4px; padding-bottom:3px; padding-top:3px; color:white; font-family:Bahnschrift;">
+                    @Html.DisplayFor(modelItem => item.Rating)
+                    <img src="~/Content/Images/whiteStar.png" style="max-height:23px; max-width:23px; margin-top:-2px;" />
+
+                </div>
+            }
+            else if (item.Rating < (decimal)4.0 && item.Rating >= (decimal)3.0)
+            {
+                <div style=" margin-left:60px; font-size:15px; width:60px; text-align:center; background-color:#f8be1a; border-radius:4px; padding-bottom:3px; padding-top:3px; color:white; font-family:Bahnschrift;">
+                    @Html.DisplayFor(modelItem => item.Rating)
+                    <img src="~/Content/Images/whiteStar.png" style="max-height:23px; max-width:23px; margin-top:-2px;" />
+
+                </div>
+            }
+            else
+            {
+                <div style=" margin-left:60px; font-size:15px; width:60px; text-align:center; background-color:#ff56b3; border-radius:4px; padding-bottom:3px; padding-top:3px; color:white; font-family:Bahnschrift;">
+                    @Html.DisplayFor(modelItem => item.Rating)
+                    <img src="~/Content/Images/whiteStar.png" style="max-height:23px; max-width:23px; margin-top:-2px;" />
+
+                </div>
+            }
+
+
+            <div style=" font-size:15px; width:80px; text-align:center; margin-left:50px;">
+                @Html.DisplayFor(modelItem => item.SeatAvailable)
+                <img src="~/Content/Images/seatIcon.png" style="height: 20px;  max-height:30px; max-width:30px;margin-left:6px;" />
+            </div>
+
+            <div style=" width:100px; font-weight:bold; font-weight:bold;margin-left:30px ; font-size:18px; color:black; position:relative;left:20px;">
+                @("RM " + Html.DisplayFor(modelItem => item.Price))
+            </div>
+
+            @*<div style="border:1px solid black;">
+            @Html.ActionLink("Edit", "Edit", new { id = item.BusTripId }) |
+            @Html.ActionLink("Details", "Details", new { id = item.BusTripId }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.BusTripId })
+        </div>*@
+            <div>
+                @*<button type="submit" class="btn-default" style="width:130px; height:40px; color:white; background-color:#ffbb00; border:thin; border-radius:10px; font-size:15px; margin-left:25px;">
+                Book Tickets
+            </button>*@
+                @Html.ActionLink("Book Tickets", "Index", "Booking", new { id = item.BusTripId }, new { @class = "btn btn-warning", style = "margin-left:25px; background-color:#fc6203;" })
+            </div>
+
+
+        </div>
+        }
+    </div>
 
 </div>
 

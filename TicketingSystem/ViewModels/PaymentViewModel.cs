@@ -14,5 +14,6 @@ namespace TicketingSystem.ViewModels
         public virtual Booking Booking { get; set; }
 
         public virtual Payment Payment { get; set; }
+
     }
 }

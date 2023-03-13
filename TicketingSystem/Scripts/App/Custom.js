@@ -28,6 +28,15 @@ $(document).ready(function () {
     });
 });
 
+$(document).ready(function () {
+    $('#promotionImage').change(function (event) {
+        var reader = new FileReader();
+        reader.onload = function () {
+            $('#promoImagePreview').attr('src', reader.result);
+        }
+        reader.readAsDataURL(event.target.files[0]);
+    });
+});
 
 ////Zooming in and out images
 //$(document).ready(function () {

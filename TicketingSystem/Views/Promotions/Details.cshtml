@@ -1,0 +1,79 @@
+﻿@model TicketingSystem.Models.Promotion
+
+@{
+    ViewBag.Title = "Promotion";
+}
+
+<div style="text-align:center;">
+    <!--Promotion Title-->
+    <div>
+        <h1 style="font-weight:bold; font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif; color:#000000">@Html.DisplayFor(model => model.PromotionTitle)</h1>
+    </div>
+
+    <!--Promotion Picture-->
+    <div style="margin-top:10px;">
+        <img src="data:image;base64,@Convert.ToBase64String(Model.PromotionPic)" alt="@Model.PromotionTitle" style="max-width:400px; max-height:400px;" />
+    </div>
+
+    <!--Promotion Duration-->
+    <div style="margin-top:20px;">
+        <h4 style="font-family:Bahnschrift;">
+            @Html.DisplayNameFor(model => model.PromotionDuration) :
+            @Html.DisplayFor(model => model.PromotionDuration)
+        </h4>
+    </div>
+
+    <hr />
+
+    <!--Promotion Description-->
+    <div style="font-size:16px; margin-top:20px; font-family:inherit;border-radius:10px; padding-bottom:30px; padding-top:20px; padding-left:10px; padding-right:10px; background-color:#c3daf7; color:black; margin-bottom:90px;">
+        @Html.DisplayFor(model => model.PromotionDescription)
+    </div>
+</div>
+
+
+
+@*<h2>Details</h2>
+
+<div>
+    <h4>Promotion</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.PromotionTitle)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PromotionTitle)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PromotionDuration)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PromotionDuration)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PromotionDescription)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PromotionDescription)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PromotionPic)
+        </dt>
+
+        <dd>
+            <img src="data:image;base64,@Convert.ToBase64String(Model.PromotionPic)" alt="@Model.PromotionTitle" style="max-width:150px; max-height:150px;" />
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.PromotionId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>*@

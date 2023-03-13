@@ -27,9 +27,13 @@
                 <ul class="dropdown-menu">
                     <li>
                         @*<a href="@Url.Action("Index", "Manage")" title="Manage">Personal Profile</a>*@
-                        <a href="@Url.Action("Index", "Manage")" title="Manage">@Truncate(@User.Identity.GetUserName().Split('@')[0], 15)</a>
+                        <a href="@Url.Action("Index", "Manage")" title="Manage"><span class="glyphicon glyphicon-user" style="margin-right:10px;"></span>@Truncate(@User.Identity.GetUserName().Split('@')[0], 15)</a>
                     </li>
-                    <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
+                    <li>
+                        @*<a href="@Url.Action("Index", "Manage")" title="Manage">Personal Profile</a>*@
+                        <a href="@Url.Action("BookingHistory", "Booking")" title="Manage"><span class="glyphicon glyphicon-list-alt" style="margin-right:10px;"></span>Booking History</a>
+                    </li>
+                    <li><a href="javascript:document.getElementById('logoutForm').submit()"><span class="glyphicon glyphicon-log-out" style="margin-right:10px;"></span>Log off</a></li>
                 </ul>
             </li>
         </ul>

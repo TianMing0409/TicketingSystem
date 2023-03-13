@@ -8,6 +8,7 @@ using System.Web.Mvc;
 using TicketingSystem.Models;
 using System.IO;
 using System.Drawing;
+using Microsoft.AspNet.Identity;
 
 namespace TicketingSystem.Controllers
 {
@@ -17,6 +18,11 @@ namespace TicketingSystem.Controllers
 
         public ActionResult Index()
         {
+            var userId = User.Identity.GetUserId();
+
+            Session["UserId"] = userId;
+
+
             BusTrip busTrip = new BusTrip();
 
             ViewBag.OriginPlaceId = new SelectList(tripDB.OriginPlaces, "OriginPlaceId", "OriginPlaceName");
@@ -36,21 +42,25 @@ namespace TicketingSystem.Controllers
                 .Where(t => t.OriginPlaceId == search.OriginPlaceId &&
             t.DestinationPlaceId == search.DestinationPlaceId &&
             t.DepartureDate == search.DepartureDate &&
-            t.ReturnDate == search.ReturnDate &&
             t.SeatAvailable > 0);
 
-            if (search.OriginPlaceId == search.DestinationPlaceId)
-            {
+            //Can add validation for origin Place and destination place (Pending)
 
-            }
+
 
             if (!trips.Any())
             {
-                return View("NoResultsFound");
+                var otherBusTrips = GetOtherBusTrips(10);
+                return View("NoResultsFound",otherBusTrips);
             }
 
 
             return View(trips.ToList());
+        }
+
+        private List<BusTrip> GetOtherBusTrips(int count)
+        {
+            return tripDB.BusTrips.OrderByDescending(a => a.SeatAvailable).Take(count).ToList();
         }
 
         public ActionResult ShowAllBusTrip()
