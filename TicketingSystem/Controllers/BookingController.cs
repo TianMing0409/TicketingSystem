@@ -25,6 +25,8 @@ namespace TicketingSystem.Controllers
         [HttpPost]
         public ActionResult Index(int id, Booking booking)
         {
+            var userId = Session["UserId"] as string;
+
             DateTime currentDate = DateTime.Now;
             BusTrip busTrip = tripDB.BusTrips.Find(id);
 
@@ -32,6 +34,7 @@ namespace TicketingSystem.Controllers
             {
                 var bookingInfo = new Booking
                 {
+                    UserId = userId,
                     BusTripId = busTrip.BusTripId,
                     PassengerName = booking.PassengerName,
                     Email = booking.Email,
@@ -58,7 +61,7 @@ namespace TicketingSystem.Controllers
 
             if (booking == null)
             {
-                return RedirectToAction("Index", "Home"); // or handle the error in some other way
+                return RedirectToAction("Index", "Home"); 
             }
 
             var viewModel = new PaymentViewModel
@@ -110,17 +113,17 @@ namespace TicketingSystem.Controllers
         [HttpPost]
         public ActionResult Payment(int bookingId, int busTripId, PaymentViewModel viewModel,Payment payment)
         {
-            var userId = Session["UserId"] as string;
+           
 
             DateTime currentDate = DateTime.Now;
             BusTrip busTrip = tripDB.BusTrips.Find(busTripId);
 
-            if (userId != null){
+
                 if (ModelState.IsValid)
                 {
                     var paymentInfo = new Payment
                     {
-                        Id = userId,
+                        //Id = userId,
                         BookingId = bookingId,
                         PaymentAmount = busTrip.Price,
                         PaymentDate = currentDate,
@@ -142,7 +145,7 @@ namespace TicketingSystem.Controllers
 
                 return RedirectToAction("Complete", "Booking", new { id = paymentInfo.PaymentId });
             }
-            }
+            
 
 
             return View();
@@ -163,33 +166,61 @@ namespace TicketingSystem.Controllers
 
         public ActionResult BookingHistory()
         {
-            var userId = Session["UserId"] as string;
-            if (userId != null)
-            {
-                var payments = tripDB.Payments.Where(p => p.Id == userId).ToList();
+            string userId = User.Identity.GetUserId();
 
-                var bookings = new List<Booking>();
+            //var bookings = tripDB.Bookings
+            //                 .Include(b => b.BusTrip)
+            //                 .Join(tripDB.Payments,
+            //                       b => b.BookingId,
+            //                       p => p.BookingId,
+            //                       (b, p) => new { Booking = b, Payment = p })
+            //                 .Where(bp => bp.Booking.UserId == userId)
+            //                 .Select(bp => bp.Booking)
+            //                 .ToList();
 
-                foreach (var payment in payments)
-                {
-                    var booking = tripDB.Bookings.FirstOrDefault(b => b.BookingId == payment.BookingId);
-                    if (booking != null)
-                    {
-                        bookings.Add(booking);
-                    }
-                }
+            //return View(bookings);
+            var bookings = tripDB.Bookings
+                 .Include(b => b.BusTrip)
+                 .Where(b => b.UserId == userId)
+                 .ToList();
 
-                //Return the bookings to the view
-                var viewModel = new BookingHistoryViewModel
-                {
-                    Bookings = bookings
-                };
-                return View(viewModel);
-            }
+            var bookingIds = bookings.Select(b => b.BookingId).ToList();
 
-            return RedirectToAction("Login", "Account");
+            var payments = tripDB.Payments
+                              .Where(p => bookingIds.Contains(p.BookingId))
+                              .ToList();
+
+            var viewModel = bookings.Join(
+                               payments,
+                               b => b.BookingId,
+                               p => p.BookingId,
+                               (b, p) => new BookingHistoryViewModel
+                               {
+                                   BookingId = b.BookingId,
+                                   BusTripId = b.BusTripId,
+                                   OriginPlace = b.BusTrip.OriginPlace.OriginPlaceName,
+                                   DestinationPlace = b.BusTrip.DestinationPlace.DestinationPlaceName,
+                                   DepartureTime = b.BusTrip.DepartureTime,
+                                   DepartureDate = b.BusTrip.DepartureDate,
+                                   BusCompanyName = b.BusTrip.BusInfos.BusCompanyName,
+                                   BusCompanyLogo = b.BusTrip.BusInfos.BusCompanyLogo,
+                                   Rating = b.BusTrip.Rating,
+                                   UserId = b.UserId,
+                                   BookingDate = b.BookingDate,
+                                   PassengerName = b.PassengerName,
+                                   PhoneNo = b.PhoneNo,
+                                   Email = b.Email,
+                                   Total = b.Total,
+                                   PaymentAmount = p.PaymentAmount,
+                                   PaymentDate = p.PaymentDate
+                               })
+                               .OrderBy(b => b.BookingDate) // Sort by BookingDate
+                               .ToList();
+
+
+            return View(viewModel);
+
         }
-
 
     }
 }

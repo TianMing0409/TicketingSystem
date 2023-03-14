@@ -39,7 +39,8 @@ namespace TicketingSystem.Controllers
         // GET: BusTripsManager/Create
         public ActionResult Create()
         {
-            ViewBag.BusId = new SelectList(db.BusInfos, "BusId", "BusCompanyName");
+            //ViewBag.BusId = new SelectList(db.BusInfos, "BusId", "BusCompanyName").Distinct();
+            ViewBag.BusId = new SelectList(db.BusInfos.Select(x => x.BusCompanyName).Distinct());
             ViewBag.DestinationPlaceId = new SelectList(db.DestinationPlaces, "DestinationPlaceId", "DestinationPlaceName");
             ViewBag.OriginPlaceId = new SelectList(db.OriginPlaces, "OriginPlaceId", "OriginPlaceName");
             return View();

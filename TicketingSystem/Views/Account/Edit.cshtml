@@ -1,0 +1,113 @@
+﻿@model TicketingSystem.ViewModels.EditProfileViewModel
+
+@{
+    ViewBag.Title = "My Account";
+}
+
+@section Scripts {
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="~/Scripts/App/Custom.js"></script>
+}
+
+
+<h2 style="display: inline-block;
+  border-bottom: 2px solid black;
+  width: 14%;">
+    @ViewBag.Title
+</h2>
+
+<div style="display:flex; flex-direction:row; margin-top:10px;">
+    <div>
+        <span class="fa fa-user-circle" style="font-size:46px; "></span>
+    </div>
+
+    <div style="margin-top:-10px; margin-left:15px;">
+        <h4>Hello!</h4>
+        <h4 style="font-weight:bold;">@Model.FirstName @Model.LastName</h4>
+    </div>
+</div>
+
+@if (TempData["AlertMessage"] != null)
+{
+<div class="alert alert-success" style="font-size:14px;">
+    <strong>Success !</strong> @TempData["AlertMessage"]
+    <script>
+        setTimeout(function () {
+            $(".alert").fadeOut("slow");
+        }, 3000); // 3 seconds
+    </script>
+</div>
+}
+
+
+@using (Html.BeginForm("Edit", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div style=" margin-top:20px; box-shadow: 5px 5px 5px 5px #888888; padding-bottom:30px; margin-bottom:50px; ">
+        <span class="fa fa-user" style="font-size:20px; margin-left:10px; margin-top:10px;">  Account Information</span>
+        <hr />
+
+        <div style="display:flex; flex-direction:row; margin-top:20px;">
+            <div style="margin-left:50px;">
+                <div class="form-group">
+                    @Html.LabelFor(m => m.FirstName, new { @class = "col-md-4" })
+                    <div class="col-md-10">
+                        @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control", style = "width:400px; max-width:400px;" })
+                        @Html.ValidationMessageFor(m => m.FirstName, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Email, new { @class = "col-md-4"})
+                    <div class="col-md-10">
+                        @Html.TextBoxFor(m => m.Email, new { @class = "form-control", style = "width:400px; max-width:400px;" })
+                        @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+
+            <div style="margin-left:140px;">
+                <div class="form-group" >
+                    @Html.LabelFor(m => m.LastName, new { @class = "col-md-4" })
+                    <div class="col-md-10">
+                        @Html.TextBoxFor(m => m.LastName, new { @class = "form-control", style = "width:400px; max-width:400px;" })
+                        @Html.ValidationMessageFor(m => m.LastName, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.PhoneNumber, new { @class = "col-md-4" })
+                    <div class="col-md-10">
+                        @Html.TextBoxFor(m => m.PhoneNumber, new { @class = "form-control", style = "width:400px; max-width:400px;" })
+                        @Html.ValidationMessageFor(m => m.PhoneNumber, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+  
+
+
+
+
+
+        <div class="form-group" style="margin-left:0px;">
+            @Html.LabelFor(m => m.Gender, new { @class = "col-md-4" })
+            <div class="col-md-10">
+                <div class="radio-buttons-horizontal">
+                    <label class="radio-inline">@Html.RadioButtonFor(m => m.Gender, "Male") Male</label>
+                    <label class="radio-inline">@Html.RadioButtonFor(m => m.Gender, "Female") Female</label>
+                    <label class="radio-inline">@Html.RadioButtonFor(m => m.Gender, "Other") Other</label>
+                </div>
+                @Html.ValidationMessageFor(m => m.Gender, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group" style="margin-top:30px;">
+            <div class="col-md-offset-5 col-md-10">
+                <button type="submit" class="btn btn-primary" style="font-size:18px; width:150px;">Update</button>
+            </div>
+        </div>
+    </div>
+}

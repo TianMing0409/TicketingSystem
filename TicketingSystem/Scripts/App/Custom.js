@@ -38,6 +38,7 @@ $(document).ready(function () {
     });
 });
 
+
 ////Zooming in and out images
 //$(document).ready(function () {
 //    $(".adv-img").mousemove(function (event) {

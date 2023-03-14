@@ -46,11 +46,9 @@ namespace TicketingSystem.Controllers
 
             //Can add validation for origin Place and destination place (Pending)
 
-
-
             if (!trips.Any())
             {
-                var otherBusTrips = GetOtherBusTrips(10);
+                var otherBusTrips = GetOtherBusTrips(5);
                 return View("NoResultsFound",otherBusTrips);
             }
 
@@ -65,7 +63,7 @@ namespace TicketingSystem.Controllers
 
         public ActionResult ShowAllBusTrip()
         {
-            var trips = tripDB.BusTrips.Include(p => p.OriginPlace).Include(p => p.DestinationPlace);
+            var trips = tripDB.BusTrips.Include(p => p.OriginPlace).Include(p => p.DestinationPlace).OrderBy(p => p.DepartureDate).ThenBy(p => p.DepartureTime);
 
             return View(trips.ToList());
         }

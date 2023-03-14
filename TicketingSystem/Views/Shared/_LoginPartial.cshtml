@@ -27,7 +27,7 @@
                 <ul class="dropdown-menu">
                     <li>
                         @*<a href="@Url.Action("Index", "Manage")" title="Manage">Personal Profile</a>*@
-                        <a href="@Url.Action("Index", "Manage")" title="Manage"><span class="glyphicon glyphicon-user" style="margin-right:10px;"></span>@Truncate(@User.Identity.GetUserName().Split('@')[0], 15)</a>
+                        <a href="@Url.Action("Edit", "Account")" title="Manage"><span class="glyphicon glyphicon-user" style="margin-right:10px;"></span>@Truncate(@User.Identity.GetUserName().Split('@')[0], 15)</a>
                     </li>
                     <li>
                         @*<a href="@Url.Action("Index", "Manage")" title="Manage">Personal Profile</a>*@

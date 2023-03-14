@@ -14,7 +14,6 @@ namespace TicketingSystem.Models
 
         public string BusCompanyName { get; set; }
 
-        [Required]
         public byte[] BusCompanyLogo { get; set; }
 
         public string BusPlateNo { get; set; }

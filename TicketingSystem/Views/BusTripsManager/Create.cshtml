@@ -7,10 +7,10 @@
 <h2>Create</h2>
 
 
-@using (Html.BeginForm()) 
+@using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
 <div class="form-horizontal">
     <h4>BusTrip</h4>
     <hr />
@@ -20,6 +20,21 @@
         <div class="col-md-10">
             @Html.DropDownList("BusId", null, htmlAttributes: new { @class = "form-control" })
             @Html.ValidationMessageFor(model => model.BusId, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.BusInfos.BusCompanyName, "Bus Company Name", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownListFor(model => model.BusInfos.BusCompanyName, new SelectList(new[]
+            {
+                new {Text = "KKKL Express", Value = "KKKL Express"},
+                new {Text = "Warisan Express", Value = "Warisan Express"},
+                new {Text = "Billion Stars Express", Value = "Billion Stars Express"},
+                new {Text = "Mayang Sari Express", Value = "Mayang Sari Express"},
+                new {Text = "V Express", Value = "V Express"},
+                new {Text = "Yellow Star Express", Value = "Yellow Star Express"}
+        }, "Value", "Text"), new { @class = "dropdownlist-height" })
         </div>
     </div>
 

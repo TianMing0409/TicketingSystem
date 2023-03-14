@@ -18,9 +18,6 @@ namespace TicketingSystem.Models
         public int BookingId { get; set; }
 
         [ScaffoldColumn(false)]
-        public string Id { get; set; }
-
-        [ScaffoldColumn(false)]
         public decimal PaymentAmount { get; set; }
 
         [ScaffoldColumn(false)]
@@ -45,6 +42,5 @@ namespace TicketingSystem.Models
         [DisplayName("CVC*")]
         public int? Cvc { get; set; }
 
-        public virtual ApplicationUser User { get; set; }
     }
 }
