@@ -210,6 +210,7 @@
     <Content Include="Content\font-awesome.css" />
     <Content Include="Content\font-awesome.min.css" />
     <Content Include="Content\Images\aboutUsBg.jpg" />
+    <Content Include="Content\Images\BillionStarsExpressLogo.png" />
     <Content Include="Content\Images\busAdv1.jpg" />
     <Content Include="Content\Images\busAdv2.png" />
     <Content Include="Content\Images\busAdv3.jpg" />
@@ -221,9 +222,11 @@
     <Content Include="Content\Images\endPointIcon.png" />
     <Content Include="Content\Images\fasterBookingIcon.png" />
     <Content Include="Content\Images\greatSavingIcon.png" />
+    <Content Include="Content\Images\KKKL Logo.jpg" />
     <Content Include="Content\Images\Loading.gif" />
     <Content Include="Content\Images\loginBackground.jpg" />
     <Content Include="Content\Images\mapLocationIcon.png" />
+    <Content Include="Content\Images\MayangSariExpressLogo.png" />
     <Content Include="Content\Images\noResultsFound.png" />
     <Content Include="Content\Images\paymentSuccessLogo.png" />
     <Content Include="Content\Images\previewImageIcon.png" />
@@ -232,8 +235,12 @@
     <Content Include="Content\Images\signUpImage.jpg" />
     <Content Include="Content\Images\startPointIcon.png" />
     <Content Include="Content\Images\timeIcon.png" />
+    <Content Include="Content\Images\VExpressLogo.png" />
+    <Content Include="Content\Images\visa-and-mastercard-logo-26.png" />
+    <Content Include="Content\Images\WarisanExpressLogo.jpeg" />
     <Content Include="Content\Images\whiteStar.png" />
     <Content Include="Content\Images\yellowStar.png" />
+    <Content Include="Content\Images\YellowStarExpressLogo.jpeg" />
     <Content Include="Content\themes\base\accordion.css" />
     <Content Include="Content\themes\base\all.css" />
     <Content Include="Content\themes\base\autocomplete.css" />

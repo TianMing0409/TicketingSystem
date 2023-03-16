@@ -3,6 +3,7 @@
 @{
     ViewBag.Title = "Payment";
 }
+
 <style>
     /* Hide the spinner on number inputs */
     input[type=number]::-webkit-outer-spin-button,
@@ -11,17 +12,6 @@
         margin: 0;
     }
 </style>
-
-<h2>Payment</h2>
-<div style="margin-left:810px;">
-    <span >Please pay within:</span>
-    <span class="glyphicon glyphicon-time" style="font-size:20px;"></span>
-    <span id="timer" style="font-size:20px; font-weight:bold; margin-left:5px;">10:00</span>
-    <span style="font-weight:bold;">minutes</span> 
-</div>
-
-<hr />
-
 
 <script>
     window.onload = function () {
@@ -44,20 +34,44 @@
     };
 </script>
 
+<div id="loading" style="display:none;">
+    <img src="~/Content/Images/Loading.gif" alt="Loading..." style="max-height:100px; max-width:100px;">
+</div>
 
+<div style="display:flex; flex-direction:row;">
+    <div>
+        <h2>Payment</h2>
+    </div>
+    <div style="margin-left:700px; margin-top:30px;">
+
+        <span>Please pay within:</span>
+        <span class="glyphicon glyphicon-time" style="font-size:20px;"></span>
+        <span id="timer" style="font-size:20px; font-weight:bold; margin-left:5px;">10:00</span>
+        <span style="font-weight:bold;">minutes</span>
+    </div>
+</div>
+
+
+
+<hr />
 <div style="display:flex; flex-direction:row; margin-bottom:112px;">
 
 
+
     <div style="margin-left:60px; border:2px solid #c7c7c7; padding-left:60px; padding-right:60px;padding-top:20px; padding-bottom:40px; border-radius:10px;">
+
+
+
         <h4 style="font-size:20px; font-weight:bold;">
             Credit or Debit Card Payment
         </h4>
         <div>
-            <i class="fa fa-cc-visa" style="font-size:36px; margin-left:10px;"></i>
-            <i class="fa fa-cc-mastercard" style="font-size:36px"></i>
+            @*<i class="fa fa-cc-visa" style="font-size:36px; margin-left:10px;"></i>
+                <i class="fa fa-cc-mastercard" style="font-size:36px"></i>*@
+            <img src="~/Content/Images/visa-and-mastercard-logo-26.png" style="max-height:50px; max-width:100px;" />
         </div>
         <hr />
-        @using (Html.BeginForm())
+        @using (Html.BeginForm("Payment", "Booking", new { bookingId = Model.Booking.BookingId, busTripId = Model.BusTrip.BusTripId }, FormMethod.Post, new { id = "myForm" }))
         {
             @Html.AntiForgeryToken()
 
@@ -96,7 +110,7 @@
 
             <div class="form-group">
                 <div class="col-md-offset-2 col-md-10">
-                    <input type="submit" value="Pay" class="btn btn-default" style="width:300px; height:35px; background-color:#ffa504; font-weight:bold; border: 1px solid #ffffff; border-radius:5px; font-size:17px; margin-top:30px;" />
+                    <input type="submit" value="Pay" id="submit-button" class="btn btn-default" style="width:300px; height:35px; background-color:#ffa504; font-weight:bold; border: 1px solid #ffffff; border-radius:5px; font-size:17px; margin-top:30px;" />
 
                 </div>
             </div>
@@ -118,7 +132,7 @@
                 </div>
 
                 <!--Date & Time Info-->
-                <div style="display:flex; flex-direction:row;margin-top:5px; border-bottom:1px solid #808080">
+                <div style="display:flex; flex-direction:row;margin-top:10px; border-bottom:1px solid #808080; padding-bottom:10px;">
                     <!--First column-->
                     <div>
                         <div style="display:flex; flex-direction:row; ">
@@ -165,7 +179,7 @@
 
 
                 <!--Origin & Destination Info-->
-                <div style="display:flex; flex-direction:row;margin-top:5px; padding-bottom:5px;">
+                <div style="display:flex; flex-direction:row;margin-top:10px; padding-bottom:15px; border-bottom:1px solid #808080; ">
                     <!--First column-->
                     <div>
                         <div style="display:flex; flex-direction:row">
@@ -205,14 +219,38 @@
 
                 </div>
 
-                <div style="margin-top:20px;">
-                    <span style="font-size:22px; color:black; font-weight:bold;">@Html.DisplayNameFor(model => model.Booking.Total)</span>
-                    <span style="font-size:22px; color:black; font-weight:bold; margin-left:210px;">RM @Html.DisplayFor(model => model.Booking.Total)</span>
+                <!--Payment Info-->
+                <div style="margin-top:20px; text-align:right;" id="payment-details">
+                    <div>
+                        <span style="text-align:left; padding-right:20px;">@Html.DisplayNameFor(model => model.Booking.Total)</span>
+                        <span style="font-size:16px; color:black;   margin-left:220px; text-align:right;">  @Html.DisplayFor(model => model.Booking.Total)</span>
+                    </div>
+
+                    <div>
+                        <span style="text-align:left; padding-right:7px;">@Html.DisplayNameFor(model => model.ProcessingFee)</span>
+                        <span style="font-size:16px; color:black;  margin-left:220px; text-align:right;">  @Html.DisplayFor(model => model.ProcessingFee)</span>
+                    </div>
+
+                    <div>
+                        <span style="text-align:left; padding-right:40px;">@Html.DisplayNameFor(model => model.Discount)</span>
+                        <span style="font-size:16px; color:black;  margin-left:220px; text-align:right;" id="discount">-  @Html.DisplayFor(model => model.Discount)</span>
+                    </div>
+
+                    <!--Promo code-->
+                    <div style="text-align:left; margin-top:20px; border-bottom:1px solid #808080; padding-bottom:20px;">
+                        <input type="text" id="promo-code" name="promo-code" style="width: 180px; height:35px; box-shadow: 0 0 5px rgb(128, 128, 128); border:none; border-radius:5px;" placeholder=" Discount/Promo Code">
+                        <button type="button" id="apply-promo-code" class="btn btn-default" style="background-color:#ffa504; color:white; width:115px; height:35px; font-size:15px;line-height: 10px; font-weight:bold; margin-left:35px;">Apply Code</button>
+                    </div>
+
+                    <div style="margin-top:10px;">
+                        <span style="font-size:22px; color:black; font-weight:bold;">@Html.DisplayNameFor(model => model.TotalAmount)</span>
+                        <span style="font-size:22px; color:black; font-weight:bold; margin-left:210px; text-align:right;" id="total-amount">RM @Html.DisplayFor(model => model.TotalAmount)</span>
+                    </div>
                 </div>
+
             </div>
 
         </div>
-
     </div>
 
 </div>
@@ -224,4 +262,7 @@
     <script src="~/Scripts/jquery-3.3.1.min.js"></script>
     <script src="~/Scripts/App/Custom.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+
 }

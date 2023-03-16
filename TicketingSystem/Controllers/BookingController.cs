@@ -3,10 +3,13 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Threading;
 using System.Web;
 using System.Web.Mvc;
 using TicketingSystem.Models;
 using TicketingSystem.ViewModels;
+using System.Net;
+using System.Net.Mail;
 
 namespace TicketingSystem.Controllers
 {
@@ -14,6 +17,10 @@ namespace TicketingSystem.Controllers
     public class BookingController : Controller
     {
         TicketsDbContext tripDB = new TicketsDbContext();
+
+        const decimal ProcessingFee = (decimal)2.50;     // Fixed processing fee for all bus trips
+        const decimal Discount = (decimal)0.25;          // Fixed discount
+        const string PromoCode = "HAPPY25";              // Promo Code        
 
         // GET: Booking
         public ActionResult Index()
@@ -40,11 +47,14 @@ namespace TicketingSystem.Controllers
                     Email = booking.Email,
                     PhoneNo = booking.PhoneNo,
                     BookingDate = currentDate,
-                    Total = busTrip.Price
-                };
+                    Total = busTrip.Price            
 
+                };
                 tripDB.Bookings.Add(bookingInfo);
                 tripDB.SaveChanges();
+
+                ViewBag.BookingId = bookingInfo.BookingId;
+                ViewBag.BusTripId = busTrip.BusTripId.ToString();
 
                 return RedirectToAction("Payment","Booking", new { bookingId = bookingInfo.BookingId, busTripId = busTrip.BusTripId} );
             }
@@ -64,95 +74,138 @@ namespace TicketingSystem.Controllers
                 return RedirectToAction("Index", "Home"); 
             }
 
+            decimal totalAmount = booking.Total + ProcessingFee;
+
+
             var viewModel = new PaymentViewModel
             {
                 Booking = booking,
                 Payment = payment,
-                BusTrip = busTrip
+                BusTrip = busTrip,
+                TotalAmount = totalAmount,
+                ProcessingFee = ProcessingFee
             };
 
             return View(viewModel);
         }
 
-        ////POST: Payment
-        //[HttpPost]
-        //public ActionResult Payment(int bookingId, int busTripId, Payment payment)
-        //{
-        //    DateTime currentDate = DateTime.Now;
-        //    BusTrip busTrip = tripDB.BusTrips.Find(busTripId);
+        [HttpPost]
+        [Route("/apply-promo-code")]
+        public JsonResult ApplyPromoCode(string promoCode,decimal totalAmount,PaymentViewModel viewModel)
+        {
 
-        //    if (ModelState.IsValid)
-        //    {
-        //        var paymentInfo = new Payment
-        //        {
-        //            BookingId = bookingId,
-        //            PaymentAmount = busTripId,
-        //            PaymentDate = currentDate,
-        //            CardHolderName = payment.CardHolderName,
-        //            CardNo = payment.CardNo,
-        //            ExpirationDate = payment.ExpirationDate,
-        //            Cvc = payment.Cvc
-        //        };
+            decimal discount = (decimal)0.00;
+            decimal discountAmt = (decimal)0.00;
 
-        //        tripDB.Payments.Add(paymentInfo);
+            if (promoCode == PromoCode)
+            {
+                discount = Discount;
+                discountAmt = totalAmount * discount;
+                discountAmt = Math.Ceiling(discountAmt * 100) / 100;
+                totalAmount = totalAmount - discountAmt;
+                totalAmount = Math.Ceiling(totalAmount * 100) / 100;
+                viewModel.Discount = discountAmt;
+                Session["DiscountAmount"] = discountAmt;
+                return Json(new { discountAmt, totalAmount,viewModel });
+            }
 
-        //        tripDB.SaveChanges();
+            // Return the updated payment information to the client side
+            return Json(new { error = "Invalid promo code" });
+        }
 
-        //        busTrip.SeatAvailable -= 1;
-        //        tripDB.Entry(busTrip).State = EntityState.Modified;
-        //        tripDB.SaveChanges();
-
-
-
-        //        return RedirectToAction("Complete", "Booking", new { id = payment.PaymentId });
-        //    }
-
-        //    return View();
-        //}
         //POST: Payment
         [HttpPost]
         public ActionResult Payment(int bookingId, int busTripId, PaymentViewModel viewModel,Payment payment)
         {
-           
+            decimal discountAmt = (decimal)0.00;
+            if (Session["DiscountAmount"] != null)
+            {
+                discountAmt = (decimal)Session["DiscountAmount"];
+            }
 
             DateTime currentDate = DateTime.Now;
             BusTrip busTrip = tripDB.BusTrips.Find(busTripId);
 
 
-                if (ModelState.IsValid)
+            if (ModelState.IsValid)
+            {
+
+                var paymentInfo = new Payment
                 {
-                    var paymentInfo = new Payment
-                    {
-                        //Id = userId,
-                        BookingId = bookingId,
-                        PaymentAmount = busTrip.Price,
-                        PaymentDate = currentDate,
-                        CardHolderName = viewModel.Payment.CardHolderName,
-                        CardNo = viewModel.Payment.CardNo,
-                        ExpirationDate = viewModel.Payment.ExpirationDate,
-                        Cvc = viewModel.Payment.Cvc
-                    };
+                    //Id = userId,
+                    BookingId = bookingId,
+                    PaymentAmount = busTrip.Price + ProcessingFee - discountAmt,
+                    PaymentDate = currentDate,
+                    CardHolderName = viewModel.Payment.CardHolderName,
+                    CardNo = viewModel.Payment.CardNo,
+                    ExpirationDate = viewModel.Payment.ExpirationDate,
+                    Cvc = viewModel.Payment.Cvc
+                };
 
                     tripDB.Payments.Add(paymentInfo);
 
                     tripDB.SaveChanges();
 
+                    Session.Remove("DiscountAmount");
                     busTrip.SeatAvailable -= 1;
                     tripDB.Entry(busTrip).State = EntityState.Modified;
                     tripDB.SaveChanges();
 
 
-
-                return RedirectToAction("Complete", "Booking", new { id = paymentInfo.PaymentId });
+                //Thread.Sleep(3000); // delay for 3 seconds
+                return RedirectToAction("Complete", "Booking", new { paymentId = paymentInfo.PaymentId, bookingId = bookingId  });
             }
-            
-
 
             return View();
         }
 
-        public ActionResult Complete(int? id)
+        public ActionResult Complete(int? paymentId, int? bookingId)
         {
+            string userEmail = User.Identity.Name;
+
+            // Get the booking information from the database
+            var booking = tripDB.Bookings.Find(bookingId);
+            var payment = tripDB.Payments.Find(paymentId);
+
+            //string bookingInfo = "<html><body>" +
+            //  "Your booking details are as follows:</p>" +
+
+            //  "<p><strong>Departure Date:</strong> " + booking.BusTrip.DepartureDate.ToShortDateString() + "</p>" +
+            //  "<p><strong>Departure Time:</strong> " + booking.BusTrip.DepartureTime + "</p>" +
+            //  "<p><strong>Origin:</strong> " + booking.BusTrip.OriginPlace.OriginPlaceName + "</p>" +
+            //  "<p><strong>Destination:</strong> " + booking.BusTrip.DestinationPlace.DestinationPlaceName + "</p>" +
+            //  "<p><strong>Passenger Name:</strong> " + booking.PassengerName + "</p>" +
+            //    "<p><strong>Passenger Name:</strong> " + booking.BookingDate + "</p>" +
+            //  "<p><strong>Total:</strong> $" + payment.PaymentAmount + "</p>" +
+            //  "</body></html>";
+
+            // Format the booking information as a string
+            string bookingInfo = "Departure Date: " + booking.BusTrip.DepartureDate.ToShortDateString() + "\n" +
+                                 "Departure Time: " + booking.BusTrip.DepartureTime + "\n" +
+                                 "Departure Location: " + booking.BusTrip.OriginPlace.OriginPlaceName + "\n" +
+                                 "Arrival Location: " + booking.BusTrip.DestinationPlace.DestinationPlaceName + "\n" +
+                                 "Passenger Name: " + booking.PassengerName + "\n" +
+                                 "Booking Date: " + booking.BookingDate + "\n" +
+                                 "Total Amount Paid: RM " + payment.PaymentAmount;
+
+            string subject = "Confirmation for Booking [ Ref : " + bookingId + "]";
+            // Add the booking information to the email body
+            string body = "Dear " + User.Identity.Name + ",\n\nThanks for your booking. \n\nThis is your booking ID: " + bookingId + "\n\nBooking Details:\n============\n" + bookingInfo;
+
+            // Create the MailMessage object with the modified email body
+            MailMessage message = new MailMessage();
+            MailAddress fromAddress = new MailAddress("kohtm0409@gmail.com", "EasyBus");
+            message.From = fromAddress;
+            message.To.Add(new MailAddress(userEmail));
+            message.Subject = subject;
+            message.Body = body;
+
+            // Send the email
+            SmtpClient client = new SmtpClient("smtp.gmail.com", 587); // Replace with your SMTP server and port
+            client.UseDefaultCredentials = false;
+            client.EnableSsl = true;
+            client.Credentials = new NetworkCredential("kohtm0409@gmail.com", "ydndlgetdciqlzad"); // Replace with your email address and password
+            client.Send(message);
 
             return View();
         }

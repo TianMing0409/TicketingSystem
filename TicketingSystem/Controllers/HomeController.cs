@@ -44,7 +44,16 @@ namespace TicketingSystem.Controllers
             t.DepartureDate == search.DepartureDate &&
             t.SeatAvailable > 0);
 
-            //Can add validation for origin Place and destination place (Pending)
+            string originPlace = tripDB.OriginPlaces.Find(search.OriginPlaceId).OriginPlaceName;
+            string destinationPlace = tripDB.DestinationPlaces.Find(search.DestinationPlaceId).DestinationPlaceName;
+
+            //Can add validation for origin Place and destination place 
+            if (tripDB.OriginPlaces.Find(search.OriginPlaceId).OriginPlaceName == tripDB.DestinationPlaces.Find(search.DestinationPlaceId).DestinationPlaceName)
+            {
+                TempData["searchAlertMsg"] = "Origin and destination places cannot be the same";
+                return RedirectToAction("Index");
+            }
+
 
             if (!trips.Any())
             {

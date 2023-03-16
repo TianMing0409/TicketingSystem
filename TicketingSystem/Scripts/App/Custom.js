@@ -39,6 +39,69 @@ $(document).ready(function () {
 });
 
 
+// Attach an event listener to the form's submit event
+$('#myForm').on('submit', function (event) {
+    // Check if the form is valid based on HTML validation rules
+    var isFormValid = this.checkValidity();
+
+    // Check if the model is valid based on jQuery Unobtrusive Validation rules
+    var isModelStateValid = $('#myForm').valid();
+
+    if (isFormValid && isModelStateValid) {
+        // Display the loading animation
+        document.getElementById('loading').style.display = 'block';
+        $("#submit-button").prop("disabled", true);
+        $("#submit-button").val("Processing...");
+
+        // Replace 2000 with the time it takes for your form to process
+        setTimeout(function () {
+            document.getElementById('loading').style.display = 'none';
+        }, 5000);
+    } else {
+        event.preventDefault();
+        // You can also display an error message to the user, if desired
+    }
+});
+
+
+
+
+
+
+$(document).ready(function () {
+    $("#apply-promo-code").click(function () {
+        var promoCode = $("#promo-code").val();
+        var totalAmount = parseFloat($("#total-amount").text().replace("RM ", ""));
+        $.ajax({
+            type: "POST",
+            url: "ApplyPromoCode",
+            data: { promoCode: promoCode, totalAmount: totalAmount },
+            success: function (data) {
+                if (data.error) {
+                    // Show an error message to the user
+                    alert(data.error);
+                } else {
+                    // Update the payment information on the client side based on the data returned by the server
+                    $("#discount").text("- " + data.discountAmt);
+                    $("#total-amount").text("RM  " + data.totalAmount);
+
+                    // Disable the Apply button
+                    $("#promo-code").prop("disabled", true);
+                    $("#apply-promo-code").prop("disabled", true);
+                    $("#apply-promo-code").text("Applied");
+
+                    // Show a success message to the user
+                    alert("Promo code applied successfully!");
+                }
+            },
+            error: function (xhr, status, error) {
+                // Show an error message to the user
+                alert("Failed to apply promo code. Error message: " + error);
+            }
+        });
+    });
+});
+
 ////Zooming in and out images
 //$(document).ready(function () {
 //    $(".adv-img").mousemove(function (event) {

@@ -28,7 +28,7 @@
                             @Html.LabelFor(m => m.Email)
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
-                                @Html.EditorFor(m => m.Email, new { htmlAttributes = new { @class = "form-control", style = "width:250px;" } })
+                                @Html.EditorFor(m => m.Email, new { htmlAttributes = new { @class = "form-control", style = "width:250px;", placeholder = "Email Address" } })
                             </div>
                             @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
                         </div>
@@ -39,7 +39,7 @@
                             @Html.LabelFor(m => m.PhoneNo)
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span>
-                                @Html.EditorFor(m => m.PhoneNo, new { htmlAttributes = new { @class = "form-control", style = "width:250px;" } })
+                                @Html.EditorFor(m => m.PhoneNo, new { htmlAttributes = new { @class = "form-control", style = "width:250px;", placeholder = "Phone Number" } })
                             </div>
                             @Html.ValidationMessageFor(m => m.PhoneNo, "", new { @class = "text-danger" })
                         </div>
@@ -58,7 +58,7 @@
 
 
     <!--Bus Trip Info -->
-    <div style="width:400px; height:250px; margin-left:100px; ">
+    <div style="width:400px; height:250px; margin-left:60px; ">
         @{Html.RenderAction("BusTripInfo", "Booking");}
 
     </div>

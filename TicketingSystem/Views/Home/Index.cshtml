@@ -12,7 +12,10 @@
 
 }
 
-
+@if (TempData["searchAlertMsg"] != null)
+{
+    <script>alert('@TempData["searchAlertMsg"]');</script>
+}
 <!--The 1st layer-->
 <div class="flex-container">
 
@@ -32,12 +35,12 @@
                 {
                     <div class="form-group">
                         @Html.LabelFor(m => m.OriginPlaceId)
-                        @Html.DropDownList("OriginPlaceId", null, htmlAttributes: new { @class = "form-control", id = "OriginPlaceId" })
+                        @Html.DropDownList("OriginPlaceId", null, htmlAttributes: new { @class = "form-control", id = "OriginPlaceId", style = "font-size: 16px"})
                     </div>
 
                     <div class="form-group">
                         @Html.LabelFor(m => m.DestinationPlaceId)
-                        @Html.DropDownList("DestinationPlaceId", null, htmlAttributes: new { @class = "form-control", id = "DestinationPlaceId" })
+                        @Html.DropDownList("DestinationPlaceId", null, htmlAttributes: new { @class = "form-control", id = "DestinationPlaceId", style = "font-size: 16px" })
                     </div>
 
                     <div class="form-group" style="padding-left:0px;">
@@ -50,17 +53,17 @@
 
 
                     @*<div class="form-group" style="padding-left:0px;">
-                        @Html.LabelFor(m => m.ReturnDate)
-                        <div class="has-feedback">
-                            <input type="text" id="returnDate" name="returnDate" class="form-control" placeholder="Optional">
-                            <span class="form-control-feedback" style="padding-right:110px;"><i class="glyphicon glyphicon-calendar"></i></span>
-                        </div>
-                    </div>*@
+                            @Html.LabelFor(m => m.ReturnDate)
+                            <div class="has-feedback">
+                                <input type="text" id="returnDate" name="returnDate" class="form-control" placeholder="Optional">
+                                <span class="form-control-feedback" style="padding-right:110px;"><i class="glyphicon glyphicon-calendar"></i></span>
+                            </div>
+                        </div>*@
 
 
 
                     <div style="display:flex; justify-content:center; align-items:center; margin-top:30px;">
-                        <button type="submit" class="btn-default" style="width:140px; height:35px; color:white; background-color:#ffb349; border:thin; border-radius:10px; font-size:larger;">
+                        <button type="submit" class="btn-default" style="width:140px; height:35px; color:white; background-color:#ff8b0d; border:thin; border-radius:10px; font-size:larger;">
                             Search Bus<i class="glyphicon glyphicon-search" style="padding-left:10px; padding-top:5px;"></i>
                         </button>
                     </div>
@@ -102,7 +105,7 @@
 <!--The Third layer (Display Popular route)-->
 <!--Hardcoded-->
 <div class="thd-layer" style="margin-bottom:40px; margin-top:20px;">
-    <div style="display:flex; flex-direction:row; margin-left:160px;">
+    <div style="display:flex; flex-direction:row; margin-left:20px;">
         <!--First column-->
         <div>
             <h2><strong>Popular</strong> Bus Routes</h2>
@@ -117,7 +120,7 @@
         </div>
 
         <!--Second column-->
-        <div style="margin-left:170px;">
+        <div style="margin-left:130px;">
             <h2><strong>Popular</strong> Train Routes</h2>
             <ul>
                 <li class="route-list">Train from Kuala Lumpur to Ipoh</li>
@@ -128,9 +131,58 @@
                 <li class="route-list">Train from Kuala Lumpur to Gemas</li>
             </ul>
         </div>
+
+        <!--Thid column-->
+        <div style="margin-left:140px;">
+            <h2><strong>Top</strong> Cities</h2>
+            <ul>
+                <li class="route-list">Kuala Lumpur Bus</li>
+                <li class="route-list">Malacca Bus</li>
+                <li class="route-list">Penang Bus</li>
+                <li class="route-list">Johor Bahru Bus</li>
+                <li class="route-list">Ipoh Bus</li>
+                <li class="route-list">Kedah Bus</li>
+            </ul>
+        </div>
     </div>
 
 </div>
 
 
+<!--The fouth layer (Partner companies)-->
+<div style="background-color:#8ebcf6">
+    <h2 style="font-family:Centaur; font-weight:bold; padding-top:10px; color:white; text-align:center;">Partner Companies</h2>
+    <div style="display:flex; flex-direction:row; margin-top:40px; padding-bottom:30px;">
+        <!--1st-->
+        <div style="margin-left:150px;">
+            <div class="company-img">
+                <img src="~/Content/Images/KKKL Logo.jpg" alt="company1" style="max-height:130px; max-width:130px; min-height:130px; min-width:130px;" />
+            </div>
+            <div class="company-img" style="margin-top:70px;">
+                <img src="~/Content/Images/YellowStarExpressLogo.jpeg" alt="company4" style="max-height:130px; max-width:130px; min-height:130px; min-width:130px;" />
+            </div>
+        </div>
 
+
+        <!--2nd-->
+        <div style="margin-left:220px;">
+            <div class="company-img">
+                <img src="~/Content/Images/MayangSariExpressLogo.png" alt="company2" style="max-height:130px; max-width:130px; min-height:130px; min-width:130px;" />
+            </div>
+            <div class="company-img" style="margin-top:70px;">
+                <img src="~/Content/Images/VExpressLogo.png" alt="company5" style="max-height:130px; max-width:130px; min-height:130px; min-width:130px;" />
+            </div>
+        </div>
+
+        <!--Third-->
+        <div style="margin-left:220px;">
+            <div class="company-img">
+                <img src="~/Content/Images/WarisanExpressLogo.jpeg" alt="company3" style="max-height:130px; max-width:130px; min-height:130px; min-width:130px;" />
+            </div>
+
+            <div class="company-img" style="margin-top:70px;">
+                <img src="~/Content/Images/BillionStarsExpressLogo.png" alt="company6" style="max-height:130px; max-width:130px; min-height:130px; min-width:130px;" />
+            </div>
+        </div>
+    </div>
+</div>
