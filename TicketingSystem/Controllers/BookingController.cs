@@ -25,10 +25,13 @@ namespace TicketingSystem.Controllers
         // GET: Booking
         public ActionResult Index()
         {
+            int numTickets = Convert.ToInt32(Request.QueryString["num_ticket"]);
+            Session["numTickets"] = numTickets;
             return View();
         }
 
-        // POST: Booking
+
+        //POST: Booking
         [HttpPost]
         public ActionResult Index(int id, Booking booking)
         {
@@ -39,6 +42,8 @@ namespace TicketingSystem.Controllers
 
             if (ModelState.IsValid)
             {
+                var numTickets = Session["numTickets"];
+
                 var bookingInfo = new Booking
                 {
                     UserId = userId,
@@ -47,7 +52,7 @@ namespace TicketingSystem.Controllers
                     Email = booking.Email,
                     PhoneNo = booking.PhoneNo,
                     BookingDate = currentDate,
-                    Total = busTrip.Price            
+                    Total = busTrip.Price * Convert.ToInt32(numTickets)
 
                 };
                 tripDB.Bookings.Add(bookingInfo);
@@ -56,10 +61,12 @@ namespace TicketingSystem.Controllers
                 ViewBag.BookingId = bookingInfo.BookingId;
                 ViewBag.BusTripId = busTrip.BusTripId.ToString();
 
-                return RedirectToAction("Payment","Booking", new { bookingId = bookingInfo.BookingId, busTripId = busTrip.BusTripId} );
+                return RedirectToAction("Payment", "Booking", new { bookingId = bookingInfo.BookingId, busTripId = busTrip.BusTripId });
             }
             return View();
         }
+
+
 
         //GET: Payment
         public ActionResult Payment(int? bookingId, int? busTripId, Payment payment)
@@ -74,7 +81,7 @@ namespace TicketingSystem.Controllers
                 return RedirectToAction("Index", "Home"); 
             }
 
-            decimal totalAmount = booking.Total + ProcessingFee;
+            decimal totalAmount = booking.Total + ProcessingFee ;
 
 
             var viewModel = new PaymentViewModel
@@ -129,12 +136,13 @@ namespace TicketingSystem.Controllers
 
             if (ModelState.IsValid)
             {
+                int numTickets = Convert.ToInt32(Session["numTickets"]);
 
                 var paymentInfo = new Payment
                 {
                     //Id = userId,
                     BookingId = bookingId,
-                    PaymentAmount = busTrip.Price + ProcessingFee - discountAmt,
+                    PaymentAmount = (busTrip.Price * numTickets) + ProcessingFee - discountAmt,
                     PaymentDate = currentDate,
                     CardHolderName = viewModel.Payment.CardHolderName,
                     CardNo = viewModel.Payment.CardNo,
@@ -147,7 +155,7 @@ namespace TicketingSystem.Controllers
                     tripDB.SaveChanges();
 
                     Session.Remove("DiscountAmount");
-                    busTrip.SeatAvailable -= 1;
+                    busTrip.SeatAvailable -= numTickets;
                     tripDB.Entry(busTrip).State = EntityState.Modified;
                     tripDB.SaveChanges();
 

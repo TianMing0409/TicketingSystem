@@ -64,10 +64,6 @@ $('#myForm').on('submit', function (event) {
 });
 
 
-
-
-
-
 $(document).ready(function () {
     $("#apply-promo-code").click(function () {
         var promoCode = $("#promo-code").val();
@@ -101,6 +97,28 @@ $(document).ready(function () {
         });
     });
 });
+
+
+$('#myModal').on('shown.bs.modal', function () {
+    $('#myForm').submit();
+});
+
+
+//$('#showPopupButton').click(function () {
+//    $.ajax({
+//        url: 'PurchaseTickets',
+//        type: 'GET',
+//        success: function (result) {
+//            var popup = window.open('', '', 'width=600,height=400');
+//            popup.document.write(result);
+//        },
+//        error: function (xhr, status, error) {
+//            // handle the error response
+//            alert(error);
+//        }
+//    });
+//});
+
 
 ////Zooming in and out images
 //$(document).ready(function () {
