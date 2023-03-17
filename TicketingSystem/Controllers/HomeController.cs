@@ -33,9 +33,6 @@ namespace TicketingSystem.Controllers
         }
 
 
-
-
-
         public ActionResult SearchTrip(BusTrip search) {
 
             var trips = tripDB.BusTrips.Include(p => p.OriginPlace).Include(p => p.DestinationPlace)
@@ -72,15 +69,13 @@ namespace TicketingSystem.Controllers
 
         public ActionResult ShowAllBusTrip()
         {
-            var trips = tripDB.BusTrips.Include(p => p.OriginPlace).Include(p => p.DestinationPlace).OrderBy(p => p.DepartureDate).ThenBy(p => p.DepartureTime);
+            var trips = tripDB.BusTrips.Include(p => p.OriginPlace).Include(p => p.DestinationPlace).OrderBy(p => p.DepartureDate).ThenByDescending(p => p.Rating);
 
             return View(trips.ToList());
         }
 
         public ActionResult Create()
         {
-
-
             ViewBag.OriginPlaceId = new SelectList(tripDB.OriginPlaces, "OriginPlaceId", "OriginPlaceName");
             ViewBag.DestinationPlaceId = new SelectList(tripDB.DestinationPlaces, "DestinationPlaceId", "DestinationPlaceName");
 
